@@ -1,9 +1,9 @@
 ﻿public class GameManager
 {
-    private NewBehaviourScript gameLog;   //Todo change class to GameLog(It's not created yet)
+    private GameLog gameLog;   //Todo change class to GameLog(It's not created yet)
     private int currTurn;
 
-    public GameManager(NewBehaviourScript gameLog)
+    public GameManager(GameLog gameLog)
     {
         this.gameLog = gameLog;
     }
