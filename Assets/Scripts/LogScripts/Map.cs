@@ -1,19 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Map : MonoBehaviour
+public class Map 
 {
-    private int[][] cells;
-    // Start is called before the first frame update
-    void Start()
+    public int[][] cells { get; } // base --> 0, empty --> 1, wall --> 2
+    public Map(int[][] cells)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        this.cells = cells;
     }
 }

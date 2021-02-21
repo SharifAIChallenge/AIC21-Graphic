@@ -1,10 +1,18 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameLog : MonoBehaviour
+public class GameLog 
 {
     public Map map { get; }
 
-    public Turn[] turn { get; }
+    public Turn[] turns { get; }
+
+    public GameLog(Map map, Turn[] turns)
+    {
+        this.map = map;
+        this.turns = turns;
+    }
+
 }
