@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Turn : MonoBehaviour
+public class Turn
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public int base1Health { get; }
+    public int base2Health { get; }
+    public int[][] recources1 { get; }
+    public int[][] recources2 { get; }
 
-    // Update is called once per frame
-    void Update()
+    public Turn(int base1Health,int base2Health,int[][] recources1,int[][] recources2)
     {
-        
+        this.base1Health = base1Health;
+        this.base2Health = base2Health;
+        this.recources1 = recources1;
+        this.recources2 = recources2;
     }
 }
