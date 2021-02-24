@@ -1,19 +1,52 @@
 {
 	"game_config": {
-		"map_height": 10,
-		"map_width": 10,
+		"map_height": 3,
+		"map_width": 3,
 		"cells_type": [
 			{
-				"row": 2,
-				"col": 3,
-				"cell_type": 1,
-				"base_owner": 0
+				"row": 0,
+				"col": 0,
+				"cell_type": 2
 			},
 			{
-				"row": 20,
-				"col": 30,
-				"cell_type": 2,
-				"base_owner": 1
+				"row": 0,
+				"col": 1,
+				"cell_type": 3
+			},
+			{
+				"row": 0,
+				"col": 2,
+				"cell_type": 0
+			},
+			{
+				"row": 1,
+				"col": 0,
+				"cell_type": 3
+			},
+			{
+				"row": 1,
+				"col": 1,
+				"cell_type": 2
+			},
+			{
+				"row": 1,
+				"col": 2,
+				"cell_type": 2
+			},
+			{
+				"row": 2,
+				"col": 0,
+				"cell_type": 1
+			},
+			{
+				"row": 2,
+				"col": 1,
+				"cell_type": 2
+			},
+			{
+				"row": 2,
+				"col": 2,
+				"cell_type": 2
 			}
 		],
 		"base_health": 50,
@@ -22,13 +55,15 @@
 	},
 	"turns": [
 		{
-			"turn_num": 1,
+			"turn_num": 0,
 			"chat_box_0": "salam",
 			"chat_box_1": "khodafez",
+			"base0_health": 30,
+			"base1_health": 25,
 			"cells": [
 				{
-					"row": 5,
-					"col": 2,
+					"row": 1,
+					"col": 1,
 					"resource_value": 10,
 					"resource_type": 0,
 					"ants": [
@@ -49,7 +84,7 @@
 					]
 				},
 				{
-					"row": 4,
+					"row": 2,
 					"col": 1,
 					"resource_value": 2,
 					"resource_type": 1,
@@ -78,27 +113,29 @@
 					"src_row": 0,
 					"src_col": 1,
 					"dst_row": 2,
-					"dst_col": 3
+					"dst_col": 2
 				},
 				{
 					"attacker_id": 12,
 					"defender_id": 6,
-					"src_row": 10,
-					"src_col": 11,
-					"dst_row": 12,
-					"dst_col": 13
+					"src_row": 2,
+					"src_col": 2,
+					"dst_row": 2,
+					"dst_col": 2
 				}
 			]
 		},
 		{
-			"turn_num": 2,
+			"turn_num": 1,
 			"chat_box_0": "chetori?",
 			"chat_box_1": "khoobam",
+			"base0_health": 20,
+			"base1_health": 15,
 			"cells": [
 				{
-					"row": 5,
-					"col": 2,
-					"resource_value": 10,
+					"row": 1,
+					"col": 1,
+					"resource_value": 8,
 					"resource_type": 0,
 					"ants": [
 						{
@@ -118,7 +155,7 @@
 					]
 				},
 				{
-					"row": 4,
+					"row": 2,
 					"col": 1,
 					"resource_value": 2,
 					"resource_type": 1,
@@ -147,15 +184,15 @@
 					"src_row": 0,
 					"src_col": 1,
 					"dst_row": 2,
-					"dst_col": 3
+					"dst_col": 2
 				},
 				{
 					"attacker_id": 12,
 					"defender_id": 6,
-					"src_row": 10,
-					"src_col": 11,
-					"dst_row": 12,
-					"dst_col": 13
+					"src_row": 2,
+					"src_col": 2,
+					"dst_row": 2,
+					"dst_col": 2
 				}
 			]
 		}

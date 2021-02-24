@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿
 public class GameLog 
 {
-    public Map map { get; }
+    public Map Map { get; }
 
-    public Turn[] turns { get; }
+    public Turn[] Turns { get; }
 
     public GameLog(Map map, Turn[] turns)
     {
-        this.map = map;
-        this.turns = turns;
+        this.Map = map;
+        this.Turns = turns;
     }
 
 }

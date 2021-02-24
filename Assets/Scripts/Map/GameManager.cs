@@ -26,9 +26,9 @@ public class GameManager : MonoBehaviour
         this.gameLog = gameLog;
         ShowMap();
         wait(1);
-        for (int i = 0; i < gameLog.turns.Length; i++)
+        for (int i = 0; i < gameLog.Turns.Length; i++)
         {
-            ApplyTurn(gameLog.turns[i]);
+            ApplyTurn(gameLog.Turns[i]);
             wait(1);
         }
     }
@@ -51,10 +51,10 @@ public class GameManager : MonoBehaviour
 
     private void ApplyTurn(Turn turn)
     {
-        base1.GetComponent<BaseScript>().setHealth(turn.base1Health);
-        base2.GetComponent<BaseScript>().setHealth(turn.base2Health);
-        ApplyRecources(turn.recources1,rec1);
-        ApplyRecources(turn.recources2,rec2);
+        base1.GetComponent<BaseScript>().setHealth(turn.Base0Health);
+        base2.GetComponent<BaseScript>().setHealth(turn.Base1Health);
+        ApplyRecources(turn.Resources0,rec1);
+        ApplyRecources(turn.Resources1,rec2);
     }
 
     private void ApplyRecources(int[][] recources,GameObject mainRec)
@@ -75,11 +75,11 @@ public class GameManager : MonoBehaviour
 
     private void ShowMap()
     {
-        for (int i = 0; i < gameLog.map.cells.Length; i++)
+        for (int i = 0; i < gameLog.Map.cells.Length; i++)
         {
-            for (int j = 0; j < gameLog.map.cells[0].Length; j++)
+            for (int j = 0; j < gameLog.Map.cells[0].Length; j++)
             {
-                switch (gameLog.map.cells[i][j])
+                switch (gameLog.Map.cells[i][j])
                 {
                     case 1:
                         InstansiateCell(cell_empty, i, j);
