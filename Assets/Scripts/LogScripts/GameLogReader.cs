@@ -1,12 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+
 
 public class GameLogReader : MonoBehaviour
 {
+    
     public GameLog GameLog { get; private set; }
+
+    private void MakeLog(string filePath)
+    {
+        string jsonStr = File.ReadAllText(filePath);
+        GameDTO gameDTO = JsonUtility.FromJson<GameDTO>(jsonStr);
+        Debug.Log(gameDTO.game_config.cells_type[1].base_owner);
+        Debug.Log(JsonUtility.ToJson(gameDTO, prettyPrint:true));
+    }
+
     private void Awake()
     {
+        MakeLog("./test1.json");
+
         //hardcoded GameLog for Test
         int[][] cells = new int[3][];
         cells[0] = new[] {3, 2, 1};
