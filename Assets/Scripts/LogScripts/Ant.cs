@@ -7,8 +7,9 @@ public class Ant
     public int Resource { get; }
     public int Row { get; }
     public int Col { get; }
+    public int Health { get; }
 
-    public Ant(int id, int team, int type, int resource, int row, int col)
+    public Ant(int id, int team, int type, int resource, int row, int col,int health)
     {
         Id = id;
         Team = team;
@@ -16,5 +17,6 @@ public class Ant
         Resource = resource;
         Row = row;
         Col = col;
+        Health = health;
     }
 }

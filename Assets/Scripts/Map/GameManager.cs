@@ -6,6 +6,7 @@ using Object = System.Object;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject antPrefab;
     public GameObject cell_empty;
     public GameObject cell_wall;
     public GameObject base1;
@@ -18,18 +19,27 @@ public class GameManager : MonoBehaviour
     public int y0;
     public int width;
     public int haight;
-    private List<Object> Temps;
+    private List<GameObject> Temps = new List<GameObject>();
+    private Hashtable AntsTable = new Hashtable();
 
 
     public void StartGameManager(GameLog gameLog)
     {
+        StartCoroutine(wait(5));
         this.gameLog = gameLog;
+        //must called from UI. just for test
+        StartCoroutine(waitedGameManager());
+    }
+
+    private IEnumerator waitedGameManager()
+    {
+        yield return new WaitForSeconds(2);
         ShowMap();
-        wait(1);
+        yield return new WaitForSeconds(2);
         for (int i = 0; i < gameLog.Turns.Length; i++)
         {
+            yield return new WaitForSeconds(2);
             ApplyTurn(gameLog.Turns[i]);
-            wait(1);
         }
     }
 
@@ -51,13 +61,42 @@ public class GameManager : MonoBehaviour
 
     private void ApplyTurn(Turn turn)
     {
+        foreach (GameObject temp in Temps)
+        {
+            Destroy(temp);
+        }
+
         base1.GetComponent<BaseScript>().setHealth(turn.Base0Health);
         base2.GetComponent<BaseScript>().setHealth(turn.Base1Health);
-        ApplyRecources(turn.Resources0,rec1);
-        ApplyRecources(turn.Resources1,rec2);
+        ApplyRecources(turn.Resources0, rec1);
+        ApplyRecources(turn.Resources1, rec2);
+        Hashtable cloneAntTable = (Hashtable) AntsTable.Clone();
+        foreach (Ant ant in turn.Ants)
+        {
+            GameObject antObject = null;
+            if (AntsTable.Contains(ant.Id))
+            {
+                cloneAntTable.Remove(ant.Id);
+                antObject = (GameObject) AntsTable[ant.Id];
+                antObject.GetComponent<AntScript>().Go(ant.Row,ant.Col,ant.Health,ant.Resource);
+            }
+            else
+            {
+                antObject = Instantiate(antPrefab);
+                antObject.GetComponent<AntScript>().Set(ant.Row, ant.Col, ant.Team, ant.Type, ant.Health, ant.Resource);
+                AntsTable.Add(ant.Id,antObject);
+            }
+
+            foreach (DictionaryEntry antDE in cloneAntTable)
+            {
+                int a = 1;
+                Destroy((GameObject)antDE.Value);
+            }
+        }
+        //todo set chats in UI
     }
 
-    private void ApplyRecources(int[][] recources,GameObject mainRec)
+    private void ApplyRecources(int[][] recources, GameObject mainRec)
     {
         for (int i = 0; i < recources.Length; i++)
         {
@@ -67,7 +106,7 @@ public class GameManager : MonoBehaviour
                 {
                     GameObject rec = InstansiateCell(mainRec, i, j);
                     rec.GetComponent<RecourceScript>().SetAmount(recources[i][j]);
-                    // Temps.Add(rec);
+                    Temps.Add(rec);
                 }
             }
         }
@@ -81,16 +120,16 @@ public class GameManager : MonoBehaviour
             {
                 switch (gameLog.Map.cells[i][j])
                 {
-                    case 1:
+                    case 2:
                         InstansiateCell(cell_empty, i, j);
                         break;
-                    case 2:
+                    case 3:
                         InstansiateCell(cell_wall, i, j);
                         break;
-                    case 3:
+                    case 0:
                         base1 = InstansiateCell(base1, i, j);
                         break;
-                    case 4:
+                    case 1:
                         base2 = InstansiateCell(base2, i, j);
                         break;
                 }
