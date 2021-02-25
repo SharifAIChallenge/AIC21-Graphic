@@ -19,6 +19,10 @@ public class ChatManager : MonoBehaviour
     private void Start()
     {
         TextsCount = Texts.Length;
+        for (int i = 0; i < TextsCount; i++)
+        {
+            Texts[i].text = "";
+        }
     }
 
     public void SetChatMessages(string[] messages)
