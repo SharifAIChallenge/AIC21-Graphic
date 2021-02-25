@@ -5,9 +5,15 @@ using UnityEngine.UI;
 
 public class ChatManager : MonoBehaviour
 {
+    public static ChatManager Instance;
+
     [SerializeField]
     private Text[] Texts;
     private int TextsCount;
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {

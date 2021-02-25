@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    public static UIManager Instance;
+
     private int TotalTurnsAmount;
     private bool GameIsPaused = false;
 
@@ -21,6 +23,11 @@ public class UIManager : MonoBehaviour
 
     public Color ClickedButtonColor;
     public Color UnclickedButtonColor;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     public void Init(int totalTurnsAmount)
     {
