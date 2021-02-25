@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ChatManager : MonoBehaviour
 {
     public static ChatManager Instance;
 
     [SerializeField]
-    private Text[] Texts;
+    private TextMeshProUGUI[] Texts;
     private int TextsCount;
     private void Awake()
     {

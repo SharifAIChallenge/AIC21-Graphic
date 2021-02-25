@@ -2,27 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
-    private int TotalTurnsAmount;
-    private bool GameIsPaused = false;
+    private int TotalTurnsAmount = 100;
 
     [SerializeField]
-    private InputField TurnInputField;
+    private TMP_InputField TurnInputField;
     [SerializeField]
-    private Text TurnText;
-    [SerializeField]
-    private Image PauseButtonImage;
-    [SerializeField]
-    private Button OpenChatButton;
+    private TextMeshProUGUI TurnText;
     [SerializeField]
     private GameObject ChatMessagesCanvas;
-
-    public Color ClickedButtonColor;
-    public Color UnclickedButtonColor;
 
     private void Awake()
     {
@@ -39,25 +32,10 @@ public class UIManager : MonoBehaviour
         string turnToGo = TurnInputField.text;
         if (int.Parse(turnToGo) <= TotalTurnsAmount && int.Parse(turnToGo) > 0)
         {
-            TurnText.text = turnToGo + "/" + TotalTurnsAmount;
+            TurnText.text = turnToGo + " / " + TotalTurnsAmount;
             //call function from GameManager
         }
-    }
-
-    public void OnPauseButtonClicked()
-    {
-        if (GameIsPaused)
-        {
-            GameIsPaused = false;
-            PauseButtonImage.color = UnclickedButtonColor;
-            //call function from GameManager
-        }
-        else
-        {
-            GameIsPaused = true;
-            PauseButtonImage.color = ClickedButtonColor;
-            //call function from GameManager
-        }
+        TurnInputField.text = "";
     }
 
     public void OnChangeSpeedButtonClicked(float factor)
@@ -65,7 +43,7 @@ public class UIManager : MonoBehaviour
         //call function from GameManager
     }
 
-    public void OnOpenChatButtonClicked()
+    public void OnToggleChatButtonClicked()
     {
         ChatMessagesCanvas.SetActive(!ChatMessagesCanvas.activeSelf);
     }
