@@ -15,7 +15,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_InputField TurnInputField;
     [SerializeField] private TextMeshProUGUI SpeedText;
     [SerializeField] private TextMeshProUGUI TurnText;
-    [SerializeField] private GameObject ChatMessagesCanvas;
+    [SerializeField] private GameObject LeftChatMessagesCanvas;
+    [SerializeField] private GameObject RightChatMessagesCanvas;
     private GameManager GameManager;
     private float Speed = 1;
     private float LastApplyTime = 0;
@@ -31,6 +32,9 @@ public class UIManager : MonoBehaviour
     {
         TotalTurnsAmount = GameManager.MaxTurns;
         SetTurnText("0");
+
+        LeftChatMessagesCanvas.SetActive(false);
+        RightChatMessagesCanvas.SetActive(false);
     }
 
     private void FixedUpdate()
@@ -77,9 +81,13 @@ public class UIManager : MonoBehaviour
         //call function from GameManager
     }
 
-    public void OnToggleChatButtonClicked()
+    public void OnLeftToggleChatButtonClicked()
     {
-        ChatMessagesCanvas.SetActive(!ChatMessagesCanvas.activeSelf);
+        LeftChatMessagesCanvas.SetActive(!LeftChatMessagesCanvas.activeSelf);
+    }
+    public void OnRightToggleChatButtonClicked()
+    {
+        RightChatMessagesCanvas.SetActive(!RightChatMessagesCanvas.activeSelf);
     }
 
     public void OnPlayButtonClicked(bool isPause)
