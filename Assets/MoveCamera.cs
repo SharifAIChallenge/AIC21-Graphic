@@ -14,11 +14,11 @@ public class MoveCamera : MonoBehaviour
     public float maxSize;
     private int width;
     private int height;
+    [SerializeField]
     private Camera myCamera;
 
     void Awake()
     {
-        myCamera = GetComponent<Camera>();
         width = Screen.width;
         height = Screen.height;
     }

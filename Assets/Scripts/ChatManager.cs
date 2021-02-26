@@ -22,6 +22,11 @@ public class ChatManager : MonoBehaviour
 
     private void Start()
     {
+        ClearChatBoxes();
+    }
+
+    public void ClearChatBoxes()
+    {
         LeftTextsCount = LeftTexts.Length;
         for (int i = 0; i < LeftTextsCount; i++)
         {

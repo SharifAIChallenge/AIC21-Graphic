@@ -45,6 +45,7 @@ public class UIManager : MonoBehaviour
             SetTurnText(CurrentTurn.ToString());
             LastApplyTime = Time.time;
             Debug.Log(CurrentTurn);
+            ChatManager.Instance.ClearChatBoxes();
             GameManager.ApplyLog(CurrentTurn);
         }
     }
@@ -57,6 +58,7 @@ public class UIManager : MonoBehaviour
             CurrentTurn = int.Parse(turnToGo);
             SetTurnText(turnToGo);
             LastApplyTime = Time.time;
+            ChatManager.Instance.ClearChatBoxes();
             GameManager.ApplyLog(CurrentTurn);
         }
 
