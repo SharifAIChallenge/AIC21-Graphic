@@ -21,46 +21,34 @@ public class GameManager : MonoBehaviour
     public int haight;
     private List<GameObject> Temps = new List<GameObject>();
     private Hashtable AntsTable = new Hashtable();
+    public int MaxTurns { get; private set; }
 
 
     public void StartGameManager(GameLog gameLog)
     {
-        StartCoroutine(wait(5));
         this.gameLog = gameLog;
-        //must called from UI. just for test
-        StartCoroutine(waitedGameManager());
-    }
-
-    private IEnumerator waitedGameManager()
-    {
-        yield return new WaitForSeconds(2);
         ShowMap();
-        yield return new WaitForSeconds(2);
-        for (int i = 0; i < gameLog.Turns.Length; i++)
-        {
-            yield return new WaitForSeconds(2);
-            ApplyTurn(gameLog.Turns[i]);
-        }
-    }
-
-    private IEnumerator wait(int seconds)
-    {
-        yield return new WaitForSeconds(seconds);
+        MaxTurns = gameLog.Turns.Length;
     }
 
     public void ApplyLog(int turn)
     {
+        if (currTurn == turn + 1)
+        {
+            ApplyTurnAnim(gameLog.Turns[turn - 1]);
+        }
+        else
+        {
+            ApplyTurnUnAnim(gameLog.Turns[turn - 1]);
+        }
+
         this.currTurn = turn;
-        // Todo
     }
 
-    public void SetGameLog(GameLog gameLog)
-    {
-        this.gameLog = gameLog;
-    }
 
-    private void ApplyTurn(Turn turn)
+    private void ApplyTurnUnAnim(Turn turn)
     {
+        Debug.Log("applyTurn " + currTurn);
         foreach (GameObject temp in Temps)
         {
             Destroy(temp);
@@ -68,8 +56,34 @@ public class GameManager : MonoBehaviour
 
         base1.GetComponent<BaseScript>().setHealth(turn.Base0Health);
         base2.GetComponent<BaseScript>().setHealth(turn.Base1Health);
-        ApplyRecources(turn.Resources0, rec1);
-        ApplyRecources(turn.Resources1, rec2);
+        ApplyResources(turn.Resources0, rec1);
+        ApplyResources(turn.Resources1, rec2);
+        foreach (DictionaryEntry antDE in AntsTable)
+        {
+            Destroy((GameObject) antDE.Value);
+        }
+
+        AntsTable.Clear();
+        foreach (Ant ant in turn.Ants)
+        {
+            GameObject antObject = Instantiate(antPrefab);
+            antObject.GetComponent<AntScript>().Set(ant.Row, ant.Col, ant.Team, ant.Type, ant.Health, ant.Resource);
+            AntsTable.Add(ant.Id, antObject);
+        }
+    }
+
+    private void ApplyTurnAnim(Turn turn)
+    {
+        Debug.Log("applyTurn " + currTurn);
+        foreach (GameObject temp in Temps)
+        {
+            Destroy(temp);
+        }
+
+        base1.GetComponent<BaseScript>().setHealth(turn.Base0Health);
+        base2.GetComponent<BaseScript>().setHealth(turn.Base1Health);
+        ApplyResources(turn.Resources0, rec1);
+        ApplyResources(turn.Resources1, rec2);
         Hashtable cloneAntTable = (Hashtable) AntsTable.Clone();
         foreach (Ant ant in turn.Ants)
         {
@@ -78,25 +92,23 @@ public class GameManager : MonoBehaviour
             {
                 cloneAntTable.Remove(ant.Id);
                 antObject = (GameObject) AntsTable[ant.Id];
-                antObject.GetComponent<AntScript>().Go(ant.Row,ant.Col,ant.Health,ant.Resource);
+                antObject.GetComponent<AntScript>().Go(ant.Row, ant.Col, ant.Health, ant.Resource);
             }
             else
             {
                 antObject = Instantiate(antPrefab);
                 antObject.GetComponent<AntScript>().Set(ant.Row, ant.Col, ant.Team, ant.Type, ant.Health, ant.Resource);
-                AntsTable.Add(ant.Id,antObject);
-            }
-
-            foreach (DictionaryEntry antDE in cloneAntTable)
-            {
-                int a = 1;
-                Destroy((GameObject)antDE.Value);
+                AntsTable.Add(ant.Id, antObject);
             }
         }
-        //todo set chats in UI
+        foreach (DictionaryEntry antDE in cloneAntTable)
+        {
+            int a = 1;
+            Destroy((GameObject) antDE.Value);
+        }
     }
 
-    private void ApplyRecources(int[][] recources, GameObject mainRec)
+    private void ApplyResources(int[][] recources, GameObject mainRec)
     {
         for (int i = 0; i < recources.Length; i++)
         {

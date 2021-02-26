@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,41 +11,86 @@ public class UIManager : MonoBehaviour
 
     private int TotalTurnsAmount = 100;
 
-    [SerializeField]
-    private TMP_InputField TurnInputField;
-    [SerializeField]
-    private TextMeshProUGUI TurnText;
-    [SerializeField]
-    private GameObject ChatMessagesCanvas;
+    [SerializeField] private float BaseTime;
+    [SerializeField] private TMP_InputField TurnInputField;
+    [SerializeField] private TextMeshProUGUI SpeedText;
+    [SerializeField] private TextMeshProUGUI TurnText;
+    [SerializeField] private GameObject ChatMessagesCanvas;
+    private GameManager GameManager;
+    private float Speed = 1;
+    private float LastApplyTime = 0;
+    private int CurrentTurn = 0;
 
     private void Awake()
     {
+        GameManager = (GameManager) FindObjectOfType(typeof(GameManager));
         Instance = this;
     }
 
-    public void Init(int totalTurnsAmount)
+    private void Start()
     {
-        TotalTurnsAmount = totalTurnsAmount;
+        TotalTurnsAmount = GameManager.MaxTurns;
+        SetTurnText("0");
     }
 
-    public void ApplyTurn()
+    private void FixedUpdate()
+    {
+        if (Time.time > LastApplyTime + BaseTime && CurrentTurn < TotalTurnsAmount)
+        {
+            CurrentTurn += 1;
+            SetTurnText(CurrentTurn.ToString());
+            LastApplyTime = Time.time;
+            Debug.Log(CurrentTurn);
+            GameManager.ApplyLog(CurrentTurn);
+        }
+    }
+
+    public void ApplyTurnButtonClicked()
     {
         string turnToGo = TurnInputField.text;
         if (int.Parse(turnToGo) <= TotalTurnsAmount && int.Parse(turnToGo) > 0)
         {
-            TurnText.text = turnToGo + " / " + TotalTurnsAmount;
-            //call function from GameManager
+            CurrentTurn = int.Parse(turnToGo);
+            SetTurnText(turnToGo);
+            LastApplyTime = Time.time;
+            GameManager.ApplyLog(CurrentTurn);
         }
+
         TurnInputField.text = "";
+    }
+
+    private void SetTurnText(string turnToGo)
+    {
+        TurnText.text = turnToGo + " / " + TotalTurnsAmount;
     }
 
     public void OnChangeSpeedButtonClicked(float factor)
     {
+        Speed *= factor;
+        if (Speed > 4)
+            Speed = 4;
+        if (Speed < 0.25)
+            Speed = (float) 0.25;
+        if (Time.timeScale > 0)
+            Time.timeScale = Speed;
+        SpeedText.text = Speed.ToString("F2");
         //call function from GameManager
     }
 
     public void OnToggleChatButtonClicked()
     {
         ChatMessagesCanvas.SetActive(!ChatMessagesCanvas.activeSelf);
+    }
+
+    public void OnPlayButtonClicked(bool isPause)
+    {
+        if (isPause)
+        {
+            Time.timeScale = 0;
+        }
+        else
+        {
+            Time.timeScale = Speed;
+        }
     }
 }

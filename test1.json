@@ -73,13 +73,6 @@
 							"type": 0,
 							"health": 4,
 							"resource": 0
-						},
-						{
-							"id": 13,
-							"team": 1,
-							"type": 1,
-							"health": 5,
-							"resource": 1
 						}
 					]
 				},
@@ -95,13 +88,6 @@
 							"type": 0,
 							"health": 4,
 							"resource": 0
-						},
-						{
-							"id": 15,
-							"team": 1,
-							"type": 1,
-							"health": 5,
-							"resource": 1
 						}
 					]
 				}
@@ -139,13 +125,6 @@
 					"resource_type": 0,
 					"ants": [
 						{
-							"id": 12,
-							"team": 0,
-							"type": 0,
-							"health": 4,
-							"resource": 0
-						},
-						{
 							"id": 13,
 							"team": 1,
 							"type": 1,
@@ -160,13 +139,6 @@
 					"resource_value": 2,
 					"resource_type": 1,
 					"ants": [
-						{
-							"id": 14,
-							"team": 0,
-							"type": 0,
-							"health": 4,
-							"resource": 0
-						},
 						{
 							"id": 15,
 							"team": 1,
