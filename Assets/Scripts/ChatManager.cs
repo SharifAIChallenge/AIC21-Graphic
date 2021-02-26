@@ -65,18 +65,18 @@ public class ChatManager : MonoBehaviour
         {
             for (int i = 0; i < RightTextsCount; i++)
             {
-                LeftTexts[i].text = messages[messagesCount - RightTextsCount + i];
+                RightTexts[i].text = messages[messagesCount - RightTextsCount + i];
             }
         }
         else
         {
             for (int i = 0; i < RightTextsCount - messagesCount; i++)
             {
-                LeftTexts[i].text = LeftTexts[i + messagesCount].text;
+                RightTexts[i].text = RightTexts[i + messagesCount].text;
             }
             for (int i = RightTextsCount - messagesCount; i < RightTextsCount; i++)
             {
-                LeftTexts[i].text = messages[messagesCount - RightTextsCount + i];
+                RightTexts[i].text = messages[messagesCount - RightTextsCount + i];
             }
         }
     }

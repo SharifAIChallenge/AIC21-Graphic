@@ -56,8 +56,8 @@
 	"turns": [
 		{
 			"turn_num": 0,
-			"chat_box_0": "salam",
-			"chat_box_1": "khodafez",
+			"chat_box_0": "chetori?,daafa?,fsafl;k??",
+			"chat_box_1": "khoobam?,fkwaov2??,faofk2342?",
 			"base0_health": 30,
 			"base1_health": 25,
 			"cells": [
@@ -113,8 +113,8 @@
 		},
 		{
 			"turn_num": 1,
-			"chat_box_0": "chetori?",
-			"chat_box_1": "khoobam",
+			"chat_box_0": "chetori,daafa,fsafl;k",
+			"chat_box_1": "khoobam,fkwaov2,faofk2342",
 			"base0_health": 20,
 			"base1_health": 15,
 			"cells": [

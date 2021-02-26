@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     {
         this.gameLog = gameLog;
         ShowMap();
+        FindObjectOfType<MoveCamera>().setMaid(gameLog.Map.cells.Length*width,gameLog.Map.cells[0].Length*haight);
         MaxTurns = gameLog.Turns.Length;
     }
 
@@ -48,6 +49,8 @@ public class GameManager : MonoBehaviour
 
     private void ApplyTurnUnAnim(Turn turn)
     {
+        ChatManager.Instance.SetLeftChatMessages(turn.ChatBox0.Split(','));
+        ChatManager.Instance.SetRightChatMessages(turn.ChatBox1.Split(','));
         Debug.Log("applyTurn " + currTurn);
         foreach (GameObject temp in Temps)
         {
@@ -74,6 +77,8 @@ public class GameManager : MonoBehaviour
 
     private void ApplyTurnAnim(Turn turn)
     {
+        ChatManager.Instance.SetLeftChatMessages(turn.ChatBox0.Split(','));
+        ChatManager.Instance.SetRightChatMessages(turn.ChatBox1.Split(','));
         Debug.Log("applyTurn " + currTurn);
         foreach (GameObject temp in Temps)
         {
