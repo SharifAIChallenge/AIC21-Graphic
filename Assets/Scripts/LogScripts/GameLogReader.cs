@@ -29,7 +29,7 @@ public class GameLogReader : MonoBehaviour
             cells[cellTypeDTO.row][cellTypeDTO.col] = cellTypeDTO.cell_type;
         }
 
-        Map map = new Map(cells);
+        Map map = new Map(cells, gameConfigDTO.base_health, gameConfigDTO.worker_health, gameConfigDTO.soldier_health);
 
         //making turns
         Turn[] turns = new Turn[gameDTO.turns.Length];
