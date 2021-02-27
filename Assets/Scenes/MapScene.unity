@@ -691,6 +691,7 @@ MonoBehaviour:
   boundary: 50
   minSize: 1
   maxSize: 20
+  myCamera: {fileID: 1509055357}
 --- !u!1 &1778195489
 GameObject:
   m_ObjectHideFlags: 0
