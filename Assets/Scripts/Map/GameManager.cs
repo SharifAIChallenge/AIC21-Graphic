@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
     public void StartGameManager(GameLog gameLog)
     {
         this.gameLog = gameLog;
+        base1.GetComponent<BaseScript>().SetMaxHealth(gameLog.Map.BaseHealth);
+        base2.GetComponent<BaseScript>().SetMaxHealth(gameLog.Map.BaseHealth);
         ShowMap();
         FindObjectOfType<MoveCamera>().setMaid(gameLog.Map.cells.Length*width,gameLog.Map.cells[0].Length*haight);
         MaxTurns = gameLog.Turns.Length;

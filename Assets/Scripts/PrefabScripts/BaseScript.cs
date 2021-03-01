@@ -6,16 +6,21 @@ using UnityEngine.UI;
 public class BaseScript : MonoBehaviour
 {
     public Text healthText;
-    public int maxHealth;
+    public HealthBar healthBar;
+    private int maxHealth;
+    private int health;
 
-    public int health
+    public void SetMaxHealth(int maxHealth)
     {
-        set { health = value; }
+        this.maxHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
     }
 
     public void setHealth(int health)
     {
         healthText.text = health.ToString();
+        this.health = health;
+        healthBar.SetHealth(health);
     }
 
     // Start is called before the first frame update
