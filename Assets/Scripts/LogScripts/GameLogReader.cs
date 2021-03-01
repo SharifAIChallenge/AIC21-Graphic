@@ -1,18 +1,23 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using TMPro;
+using UnityEngine.Networking;
 
 
 public class GameLogReader : MonoBehaviour
 {
+    public bool isWebGL;
+    public TextMeshProUGUI TextMeshProUgui;
+
     public GameLog GameLog { get; private set; }
 
-    private void MakeLog(string filePath)
+    private void MakeLog(string jsonStr)
     {
-        string jsonStr = File.ReadAllText(filePath);
         GameDTO gameDTO = JsonUtility.FromJson<GameDTO>(jsonStr);
-        Debug.Log(JsonUtility.ToJson(gameDTO, prettyPrint: true));
+        // Debug.Log(JsonUtility.ToJson(gameDTO, prettyPrint: true));
 
         // making map
         GameConfigDTO gameConfigDTO = gameDTO.game_config;
@@ -86,19 +91,34 @@ public class GameLogReader : MonoBehaviour
         this.GameLog = new GameLog(map, turns);
     }
 
+    public void testJS(string s)
+    {
+        TextMeshProUgui.text = s;
+    }
     private void Awake()
     {
-        MakeLog("./test1.json"); //TODO: must be called from UI, this is for test. ALSO don't need to inherit MonoBehaviour
+        try
+        {
+            if (isWebGL)
+            {
+                
+            }
+            else // desktop app
+            {
+                string jsonStr = File.ReadAllText("./test1.json");
+                MakeLog(jsonStr); //TODO: must be called from UI, this is for test. ALSO don't need to inherit MonoBehaviour
+                GameObject.FindWithTag("GameManager").GetComponent<GameManager>().StartGameManager(GameLog);
+            }
+        }
+        catch (Exception x)
+        {
+            Debug.Log(x.Data);
+        }
+    }
+
+    public void WebGLSetJson(string json)
+    {
+        MakeLog(json); 
         GameObject.FindWithTag("GameManager").GetComponent<GameManager>().StartGameManager(GameLog);
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
     }
 }
