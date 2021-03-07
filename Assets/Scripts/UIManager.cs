@@ -42,11 +42,8 @@ public class UIManager : MonoBehaviour
         if (Time.time > LastApplyTime + BaseTime && CurrentTurn < TotalTurnsAmount)
         {
             CurrentTurn += 1;
-            SetTurnText(CurrentTurn.ToString());
-            LastApplyTime = Time.time;
+            ApplyTurn(CurrentTurn.ToString());
             Debug.Log(CurrentTurn);
-            ChatManager.Instance.ClearChatBoxes();
-            GameManager.ApplyLog(CurrentTurn);
         }
     }
 
@@ -56,18 +53,43 @@ public class UIManager : MonoBehaviour
         if (int.Parse(turnToGo) <= TotalTurnsAmount && int.Parse(turnToGo) > 0)
         {
             CurrentTurn = int.Parse(turnToGo);
-            SetTurnText(turnToGo);
-            LastApplyTime = Time.time;
-            ChatManager.Instance.ClearChatBoxes();
-            GameManager.ApplyLog(CurrentTurn);
+            ApplyTurn(turnToGo);
         }
 
         TurnInputField.text = "";
     }
 
+    private void ApplyTurn(string turnToGo)
+    {
+        SetTurnText(turnToGo);
+        LastApplyTime = Time.time;
+        ChatManager.Instance.ClearChatBoxes();
+        GameManager.ApplyLog(CurrentTurn);
+    }
+
     private void SetTurnText(string turnToGo)
     {
         TurnText.text = turnToGo + " / " + TotalTurnsAmount;
+    }
+
+    public void OnNextTurnButtonClick()
+    {
+        int turnToGo = CurrentTurn + 1;
+        if (turnToGo <= TotalTurnsAmount && turnToGo > 0)
+        {
+            CurrentTurn = turnToGo;
+            ApplyTurn(turnToGo.ToString());
+        }
+    }
+
+    public void OnPreviousTurnButtonClick()
+    {
+        int turnToGo = CurrentTurn - 1;
+        if (turnToGo <= TotalTurnsAmount && turnToGo > 0)
+        {
+            CurrentTurn = turnToGo;
+            ApplyTurn(turnToGo.ToString());
+        }
     }
 
     public void OnChangeSpeedButtonClicked(float factor)
