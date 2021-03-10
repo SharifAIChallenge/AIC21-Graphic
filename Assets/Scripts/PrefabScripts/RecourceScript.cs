@@ -5,10 +5,15 @@ using UnityEngine.UI;
 
 public class RecourceScript : MonoBehaviour
 {
+    [SerializeField]
     private GameObject res20;
+    [SerializeField]
     private GameObject res40;
+    [SerializeField]
     private GameObject res60;
+    [SerializeField]
     private GameObject res80;
+    [SerializeField]
     private GameObject res100;
     
 

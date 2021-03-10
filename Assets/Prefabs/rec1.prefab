@@ -339,6 +339,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc9e82fd0f1a01244b2fb19240dd086d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  res20: {fileID: 8343821709966391433}
+  res40: {fileID: 2344679055347122192}
+  res60: {fileID: 3546547752937564717}
+  res80: {fileID: 1910012141886667111}
+  res100: {fileID: 4887449717447989113}
   Text: {fileID: 5211147528085920018}
 --- !u!1 &3546547752937564717
 GameObject:
