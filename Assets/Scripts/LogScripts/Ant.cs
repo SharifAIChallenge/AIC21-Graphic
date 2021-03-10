@@ -19,4 +19,17 @@ public class Ant
         Col = col;
         Health = health;
     }
+
+    public override bool Equals(object obj)
+    {
+        //Check for null and compare run-time types.
+        if ((obj == null))
+        {
+            return false;
+        }
+        else {
+            Ant p = (Ant) obj;
+            return this.Id == p.Id;
+        }
+    }
 }

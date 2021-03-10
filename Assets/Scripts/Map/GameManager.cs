@@ -22,30 +22,33 @@ public class GameManager : MonoBehaviour
     private List<GameObject> Temps = new List<GameObject>();
     private Hashtable AntsTable = new Hashtable();
     public int MaxTurns { get; private set; }
+    private float baseTime;
 
 
     public void StartGameManager(GameLog gameLog)
     {
+        baseTime = UIManager.Instance.BaseTime;
         this.gameLog = gameLog;
         base1.GetComponent<BaseScript>().SetMaxHealth(gameLog.Map.BaseHealth);
         base2.GetComponent<BaseScript>().SetMaxHealth(gameLog.Map.BaseHealth);
         ShowMap();
-        FindObjectOfType<MoveCamera>().setMaid(gameLog.Map.cells.Length*width,gameLog.Map.cells[0].Length*haight);
+        FindObjectOfType<MoveCamera>().setMaid(gameLog.Map.cells.Length * width, gameLog.Map.cells[0].Length * haight);
         MaxTurns = gameLog.Turns.Length;
     }
 
     public void ApplyLog(int turn)
     {
-        if (currTurn == turn + 1)
+        Debug.Log(currTurn+" "+turn);
+        if (currTurn == turn - 1)
         {
-            ApplyTurnAnim(gameLog.Turns[turn - 1]);
+            Debug.Log("anim move");
+            StartCoroutine(ApplyTurnAnim(gameLog.Turns[turn - 1]));
         }
         else
         {
             ApplyTurnUnAnim(gameLog.Turns[turn - 1]);
         }
-
-        this.currTurn = turn;
+        currTurn = turn;
     }
 
 
@@ -77,8 +80,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void ApplyTurnAnim(Turn turn)
+    private IEnumerator ApplyTurnAnim(Turn turn)
     {
+        //attack and dead and get recource and set recource and set base healthes
         ChatManager.Instance.SetLeftChatMessages(turn.ChatBox0.Split(','));
         ChatManager.Instance.SetRightChatMessages(turn.ChatBox1.Split(','));
         Debug.Log("applyTurn " + currTurn);
@@ -92,6 +96,8 @@ public class GameManager : MonoBehaviour
         ApplyResources(turn.Resources0, rec1);
         ApplyResources(turn.Resources1, rec2);
         Hashtable cloneAntTable = (Hashtable) AntsTable.Clone();
+        Hashtable MovingAnts = new Hashtable();
+        Hashtable NewAnts = new Hashtable();
         foreach (Ant ant in turn.Ants)
         {
             GameObject antObject = null;
@@ -99,32 +105,57 @@ public class GameManager : MonoBehaviour
             {
                 cloneAntTable.Remove(ant.Id);
                 antObject = (GameObject) AntsTable[ant.Id];
-                antObject.GetComponent<AntScript>().Go(ant.Row, ant.Col, ant.Health, ant.Resource);
+                MovingAnts.Add(antObject, ant);
+                //todo move ant animation
+                // antObject.GetComponent<AntScript>().Go(ant.Row, ant.Col, ant.Health, ant.Resource,UIManager.Instance.BaseTime/2);
             }
             else
             {
-                antObject = Instantiate(antPrefab);
-                antObject.GetComponent<AntScript>().Set(ant.Row, ant.Col, ant.Team, ant.Type, ant.Health, ant.Resource);
-                AntsTable.Add(ant.Id, antObject);
+                //new ants
+                NewAnts.Add(ant.Id, ant);
+                // antObject = Instantiate(antPrefab);
+                // antObject.GetComponent<AntScript>().Set(ant.Row, ant.Col, ant.Team, ant.Type, ant.Health, ant.Resource);
             }
         }
+
         foreach (DictionaryEntry antDE in cloneAntTable)
         {
-            int a = 1;
-            Destroy((GameObject) antDE.Value);
+            //dead ants
+            AntScript antScript = (AntScript) (antDE.Value);
+            StartCoroutine(antScript.die(baseTime / 2));
+        }
+
+        foreach (DictionaryEntry antDE in NewAnts)
+        {
+            //new ants
+            Ant antObject = (Ant) antDE.Value;
+            GameObject ant;
+            ant = Instantiate(antPrefab);
+            ant.GetComponent<AntScript>().Set(antObject.Row, antObject.Col, antObject.Team, antObject.Type,
+                antObject.Health, antObject.Resource);
+            AntsTable.Add(antObject.Id, ant);
+        }
+
+        yield return new WaitForSeconds(baseTime / 2);
+        //move ants time
+        foreach (DictionaryEntry antDE in MovingAnts)
+        {
+            Ant ant = (Ant) antDE.Value;
+            GameObject antScript = (GameObject) antDE.Key;
+            StartCoroutine(antScript.GetComponent<AntScript>().Go(ant.Row, ant.Col, ant.Health, ant.Resource, baseTime / 2));
         }
     }
 
-    private void ApplyResources(int[][] recources, GameObject mainRec)
+    private void ApplyResources(int[][] resources, GameObject mainRec)
     {
-        for (int i = 0; i < recources.Length; i++)
+        for (int i = 0; i < resources.Length; i++)
         {
-            for (int j = 0; j < recources[0].Length; j++)
+            for (int j = 0; j < resources[0].Length; j++)
             {
-                if (recources[i][j] > 0)
+                if (resources[i][j] > 0)
                 {
                     GameObject rec = InstansiateCell(mainRec, i, j);
-                    rec.GetComponent<RecourceScript>().SetAmount(recources[i][j]);
+                    rec.GetComponent<RecourceScript>().SetAmount(resources[i][j]);
                     Temps.Add(rec);
                 }
             }
@@ -159,7 +190,12 @@ public class GameManager : MonoBehaviour
     private GameObject InstansiateCell(GameObject instance, int i, int j)
     {
         return Instantiate(instance,
-            new Vector3(x0 + i * width, y0 + j * haight, 0),
+            ConvertPosition(i, j),
             Quaternion.identity);
+    }
+
+    public Vector3 ConvertPosition(int x, int y)
+    {
+        return new Vector3(x0 + x * width, y0 - y * haight, 1);
     }
 }

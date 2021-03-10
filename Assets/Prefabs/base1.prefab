@@ -197,7 +197,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthText: {fileID: 605628675441041534}
-  maxHealth: 10
   healthBar: {fileID: 6205538578689328538}
 --- !u!1 &8640561645862561521
 GameObject:
@@ -285,6 +284,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6046186819930365853}
     m_Modifications:
+    - target: {fileID: 897281233264971779, guid: 7a7b86b3505bf8b49a1f5b34cdf6a6d1, type: 3}
+      propertyPath: m_Value
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 897281234225235143, guid: 7a7b86b3505bf8b49a1f5b34cdf6a6d1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -335,7 +338,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 897281234225235143, guid: 7a7b86b3505bf8b49a1f5b34cdf6a6d1, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.801
+      value: 1.77
       objectReference: {fileID: 0}
     - target: {fileID: 897281234225235143, guid: 7a7b86b3505bf8b49a1f5b34cdf6a6d1, type: 3}
       propertyPath: m_SizeDelta.x
@@ -368,6 +371,18 @@ PrefabInstance:
     - target: {fileID: 897281234225235143, guid: 7a7b86b3505bf8b49a1f5b34cdf6a6d1, type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 897281234225235143, guid: 7a7b86b3505bf8b49a1f5b34cdf6a6d1, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3.3099
+      objectReference: {fileID: 0}
+    - target: {fileID: 897281234225235143, guid: 7a7b86b3505bf8b49a1f5b34cdf6a6d1, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3.3099
+      objectReference: {fileID: 0}
+    - target: {fileID: 897281234225235143, guid: 7a7b86b3505bf8b49a1f5b34cdf6a6d1, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3.3099
       objectReference: {fileID: 0}
     - target: {fileID: 897281234225235147, guid: 7a7b86b3505bf8b49a1f5b34cdf6a6d1, type: 3}
       propertyPath: m_Name

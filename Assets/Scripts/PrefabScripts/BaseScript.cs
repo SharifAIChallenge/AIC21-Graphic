@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,7 +19,15 @@ public class BaseScript : MonoBehaviour
 
     public void setHealth(int health)
     {
-        healthText.text = health.ToString();
+        try
+        {
+
+            healthText.text = health.ToString();
+        }
+        catch (Exception e)
+        {
+            Debug.Log(gameObject.name);
+        }
         this.health = health;
         healthBar.SetHealth(health);
     }

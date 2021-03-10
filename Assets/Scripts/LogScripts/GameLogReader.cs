@@ -90,11 +90,7 @@ public class GameLogReader : MonoBehaviour
 
         this.GameLog = new GameLog(map, turns);
     }
-
-    public void testJS(string s)
-    {
-        TextMeshProUgui.text = s;
-    }
+    
     private void Awake()
     {
         try
