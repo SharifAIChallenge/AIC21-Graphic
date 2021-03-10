@@ -11,7 +11,7 @@ public class UIManager : MonoBehaviour
 
     private int TotalTurnsAmount = 100;
 
-    [SerializeField] private float BaseTime;
+    [SerializeField] public float BaseTime; 
     [SerializeField] private TMP_InputField TurnInputField;
     [SerializeField] private TextMeshProUGUI SpeedText;
     [SerializeField] private TextMeshProUGUI TurnText;

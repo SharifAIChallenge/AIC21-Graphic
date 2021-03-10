@@ -14,17 +14,40 @@ public class AntScript : MonoBehaviour
     public Sprite resource2;
     public SpriteRenderer resourceSpriteRenderer;
     public Text healthText;
+    [SerializeField]
+    private RuntimeAnimatorController redWorkerAnimator;
+    [SerializeField]
+    private RuntimeAnimatorController redFighterAnimator;
+    [SerializeField]
+    private RuntimeAnimatorController blackWorkerAnimator;
+    [SerializeField]
+    private RuntimeAnimatorController blackFighterAnimator;
     private GameManager gameManager;
+    private float Speed;
+
     private int x;
     private int y;
     private int health;
     private int recource;
     private int team;
     private int type;
+    private float baseTime;
+    private Vector3 temp;
+    private bool readTemp = false;
+    private float reachTime;
+    private Animator mainAnimator;
 
     private void Awake()
     {
+        mainAnimator = GetComponent<Animator>();
         gameManager = FindObjectOfType<GameManager>();
+        // RedAnimator.end
+        // baseTime = UIManager.Instance.BaseTime;
+        // Set(1, 1, 0, 1, 2, 0);
+        // Debug.Log("start");
+        // yield return new WaitForSeconds(1);
+        // Debug.Log("go");
+        // StartCoroutine(Go(3, 2, 2, 0, 2));
     }
 
     public void Set(int x, int y, int team, int type, int health, int recource)
@@ -40,41 +63,85 @@ public class AntScript : MonoBehaviour
         if (type == 1)
             SetResource(recource);
         SetHealth(health);
+        mainAnimator.Play("Idle");
+        readTemp = false;
     }
 
-    public void Go(int x, int y, int health, int recource)
+    public IEnumerator Go(int x, int y, int health, int recource, float time)
     {
+        int tempX = this.x;
+        int tempY = this.y;
         this.x = x;
         this.y = y;
         this.recource = recource;
         this.health = health;
-        SetPosition(x, y);
+        // SetPosition(x, y);
         if (type == 1)
             SetResource(recource);
         SetHealth(health);
+        yield return new WaitForSeconds(baseTime / 2);
+        temp = gameManager.ConvertPosition(x, y);
+        Debug.Log(temp);
+        mainAnimator.Play("Walk");
+        readTemp = true;
+        reachTime = time+Time.time;
+    }
+
+    private void Update()
+    {
+        if (readTemp)
+        {
+            float d = Vector2.Distance(transform.position, temp);
+            Debug.Log(d);
+            if (d < 0.5)
+            {
+                readTemp = false;
+                mainAnimator.Play("Idle");
+            }
+            else
+            {
+                transform.position = Vector3.MoveTowards(transform.position, temp,
+                   ( d / (reachTime-Time.time)) * Time.deltaTime);
+                Vector3 dir = temp - transform.position;
+                float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+            }
+        }
+    }
+
+    public IEnumerator die(float time)
+    {
+        mainAnimator.Play("Die");
+        yield return new WaitForSeconds(time);
+        Destroy(this.gameObject);
     }
 
     private void SetPosition(int x, int y)
     {
         transform.position =
-            new Vector3(gameManager.x0 + x * gameManager.width, gameManager.y0 + y * gameManager.haight, 0);
+            new Vector3(gameManager.x0 + x * gameManager.width, gameManager.y0 - y * gameManager.haight, 0);
     }
 
     private void SetSprite(int team, int type)
     {
-        if (team == 0)
+        if (team == 0) //red team
         {
             if (type == 1)
-                SetSprite(worker1);
+            {
+                mainAnimator.runtimeAnimatorController = redWorkerAnimator;
+                mainAnimator.Play("RedAntIdle");
+            }
             else
-                SetSprite(fighter1);
+            {
+                mainAnimator.runtimeAnimatorController = redFighterAnimator;
+            }
         }
-        else
+        else//black team
         {
             if (type == 1)
-                SetSprite(worker2);
+                mainAnimator.runtimeAnimatorController = blackFighterAnimator;
             else
-                SetSprite(fighter2);
+                mainAnimator.runtimeAnimatorController = blackWorkerAnimator;
         }
     }
 
@@ -96,11 +163,11 @@ public class AntScript : MonoBehaviour
                 break;
         }
 
-        resourceSpriteRenderer.size = new Vector2(0.5f, 0.5f);
+         resourceSpriteRenderer.size = new Vector2(0.5f, 0.5f);
     }
 
     private void SetHealth(int health)
     {
-        healthText.text = health.ToString();
+        //todo slider health
     }
 }

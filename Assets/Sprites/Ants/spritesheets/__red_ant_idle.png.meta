@@ -1,0 +1,610 @@
+fileFormatVersion: 2
+guid: e16a3ae99fa021f49855e2fb535ab38a
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2063937709773383588
+    second: __red_ant_idle_0
+  - first:
+      213: -3011189439751638267
+    second: __red_ant_idle_1
+  - first:
+      213: -7232835370996651260
+    second: __red_ant_idle_2
+  - first:
+      213: -1125306328393138996
+    second: __red_ant_idle_3
+  - first:
+      213: 5411558019418930188
+    second: __red_ant_idle_4
+  - first:
+      213: 1087143652827538039
+    second: __red_ant_idle_5
+  - first:
+      213: -3531393065735399519
+    second: __red_ant_idle_6
+  - first:
+      213: 811907829970438495
+    second: __red_ant_idle_7
+  - first:
+      213: -5522242110345466563
+    second: __red_ant_idle_8
+  - first:
+      213: -8934314204824473688
+    second: __red_ant_idle_9
+  - first:
+      213: -5367178174080806755
+    second: __red_ant_idle_10
+  - first:
+      213: -3059454981854108379
+    second: __red_ant_idle_11
+  - first:
+      213: 8179525191892644610
+    second: __red_ant_idle_12
+  - first:
+      213: -4301650163938800355
+    second: __red_ant_idle_13
+  - first:
+      213: 3795848602366536397
+    second: __red_ant_idle_14
+  - first:
+      213: 486588238040461785
+    second: __red_ant_idle_15
+  - first:
+      213: 7902682143320483236
+    second: __red_ant_idle_16
+  - first:
+      213: -8341453507197109376
+    second: __red_ant_idle_17
+  - first:
+      213: -8655965517343734361
+    second: __red_ant_idle_18
+  - first:
+      213: -4561991351331001346
+    second: __red_ant_idle_19
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: __red_ant_idle_0
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 2288
+        width: 489
+        height: 732
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c589c62969b6b53e0800000000000000
+      internalID: -2063937709773383588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: __red_ant_idle_1
+      rect:
+        serializedVersion: 2
+        x: 574
+        y: 2287
+        width: 489
+        height: 735
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5033234982b1636d0800000000000000
+      internalID: -3011189439751638267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: __red_ant_idle_2
+      rect:
+        serializedVersion: 2
+        x: 1112
+        y: 2287
+        width: 489
+        height: 736
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40b2dd02d8ecf9b90800000000000000
+      internalID: -7232835370996651260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: __red_ant_idle_3
+      rect:
+        serializedVersion: 2
+        x: 1650
+        y: 2285
+        width: 491
+        height: 738
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cccb0a04bdb1260f0800000000000000
+      internalID: -1125306328393138996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: __red_ant_idle_4
+      rect:
+        serializedVersion: 2
+        x: 2188
+        y: 2284
+        width: 491
+        height: 739
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0cb1e4d857b91b40800000000000000
+      internalID: 5411558019418930188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: __red_ant_idle_5
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 1523
+        width: 491
+        height: 743
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7722b9e646f461f00800000000000000
+      internalID: 1087143652827538039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: __red_ant_idle_6
+      rect:
+        serializedVersion: 2
+        x: 574
+        y: 1522
+        width: 491
+        height: 744
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a7509287b8fdfec0800000000000000
+      internalID: -3531393065735399519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: __red_ant_idle_7
+      rect:
+        serializedVersion: 2
+        x: 1112
+        y: 1522
+        width: 491
+        height: 745
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f590fb3aed9744b00800000000000000
+      internalID: 811907829970438495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: __red_ant_idle_8
+      rect:
+        serializedVersion: 2
+        x: 1650
+        y: 1520
+        width: 491
+        height: 749
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3da7290f0e0d53b0800000000000000
+      internalID: -5522242110345466563
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: __red_ant_idle_9
+      rect:
+        serializedVersion: 2
+        x: 2190
+        y: 1519
+        width: 489
+        height: 751
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8afe5b51190f20480800000000000000
+      internalID: -8934314204824473688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: __red_ant_idle_10
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 760
+        width: 489
+        height: 751
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d901faf13e3f385b0800000000000000
+      internalID: -5367178174080806755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: __red_ant_idle_11
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 760
+        width: 489
+        height: 750
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 525694857e1aa85d0800000000000000
+      internalID: -3059454981854108379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: __red_ant_idle_12
+      rect:
+        serializedVersion: 2
+        x: 1112
+        y: 761
+        width: 491
+        height: 749
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 203be1633d2838170800000000000000
+      internalID: 8179525191892644610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: __red_ant_idle_13
+      rect:
+        serializedVersion: 2
+        x: 1650
+        y: 763
+        width: 491
+        height: 745
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1d4d6e87f77d44c0800000000000000
+      internalID: -4301650163938800355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: __red_ant_idle_14
+      rect:
+        serializedVersion: 2
+        x: 2188
+        y: 763
+        width: 491
+        height: 744
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dca683d41309da430800000000000000
+      internalID: 3795848602366536397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: __red_ant_idle_15
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 5
+        width: 491
+        height: 743
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d1f848ac65b0c600800000000000000
+      internalID: 486588238040461785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: __red_ant_idle_16
+      rect:
+        serializedVersion: 2
+        x: 574
+        y: 7
+        width: 491
+        height: 739
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a5a0750a87fbad60800000000000000
+      internalID: 7902682143320483236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: __red_ant_idle_17
+      rect:
+        serializedVersion: 2
+        x: 1112
+        y: 8
+        width: 491
+        height: 738
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 08b7419ea343d3c80800000000000000
+      internalID: -8341453507197109376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: __red_ant_idle_18
+      rect:
+        serializedVersion: 2
+        x: 1650
+        y: 10
+        width: 489
+        height: 736
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a542b62935dfd780800000000000000
+      internalID: -8655965517343734361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: __red_ant_idle_19
+      rect:
+        serializedVersion: 2
+        x: 2188
+        y: 10
+        width: 489
+        height: 735
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: efbe283590d80b0c0800000000000000
+      internalID: -4561991351331001346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
