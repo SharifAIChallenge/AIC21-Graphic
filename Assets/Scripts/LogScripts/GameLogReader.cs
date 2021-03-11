@@ -91,7 +91,7 @@ public class GameLogReader : MonoBehaviour
         this.GameLog = new GameLog(map, turns);
     }
     
-    private void Awake()
+    private void Start()
     {
         try
         {
@@ -102,8 +102,8 @@ public class GameLogReader : MonoBehaviour
             else // desktop app
             {
                 string jsonStr = File.ReadAllText("./test1.json");
-                MakeLog(jsonStr); //TODO: must be called from UI, this is for test. ALSO don't need to inherit MonoBehaviour
-                GameObject.FindWithTag("GameManager").GetComponent<GameManager>().StartGameManager(GameLog);
+                MakeLog(jsonStr); 
+               GameManager.Instance.StartGameManager(GameLog);
             }
         }
         catch (Exception x)
@@ -115,6 +115,6 @@ public class GameLogReader : MonoBehaviour
     public void WebGLSetJson(string json)
     {
         MakeLog(json); 
-        GameObject.FindWithTag("GameManager").GetComponent<GameManager>().StartGameManager(GameLog);
+       GameManager.Instance.StartGameManager(GameLog);
     }
 }

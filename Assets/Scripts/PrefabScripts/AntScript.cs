@@ -80,7 +80,7 @@ public class AntScript : MonoBehaviour
             SetResource(recource);
         SetHealth(health);
         yield return new WaitForSeconds(baseTime / 2);
-        temp = gameManager.ConvertPosition(x, y);
+        temp = GameManager.Instance.ConvertPosition(x, y);
         mainAnimator.Play("Walk");
         readTemp = true;
         reachTime = time+Time.time;
@@ -117,7 +117,7 @@ public class AntScript : MonoBehaviour
 
     private void SetPosition(int x, int y)
     {
-        transform.position = gameManager.ConvertPosition(x, y);
+        transform.position = GameManager.Instance.ConvertPosition(x, y);
         Debug.Log(transform.position);
     }
 

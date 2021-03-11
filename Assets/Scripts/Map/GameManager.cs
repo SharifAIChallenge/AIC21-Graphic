@@ -23,8 +23,15 @@ public class GameManager : MonoBehaviour
     private Hashtable AntsTable = new Hashtable();
     public int MaxTurns { get; private set; }
     private float baseTime;
-    public bool playAnime;
+    [HideInInspector]
+    private bool playAnime;
 
+    public static GameManager Instance  { get; private set; }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     public void StartGameManager(GameLog gameLog)
     {
@@ -58,7 +65,7 @@ public class GameManager : MonoBehaviour
     {
         ChatManager.Instance.SetLeftChatMessages(turn.ChatBox0.Split(','));
         ChatManager.Instance.SetRightChatMessages(turn.ChatBox1.Split(','));
-        Debug.Log("unAnim move "+currTurn);
+        Debug.Log("unAnim move " + currTurn);
         foreach (GameObject temp in Temps)
         {
             Destroy(temp);
@@ -115,18 +122,15 @@ public class GameManager : MonoBehaviour
             {
                 //new ants
                 NewAnts.Add(ant.Id, ant);
+
                 // antObject = Instantiate(antPrefab);
                 // antObject.GetComponent<AntScript>().Set(ant.Row, ant.Col, ant.Team, ant.Type, ant.Health, ant.Resource);
             }
         }
 
-        foreach (DictionaryEntry antDE in cloneAntTable)
+        if (playAnime)
         {
-            //dead ants
-            AntScript antScript = (AntScript) (antDE.Value);
-            StartCoroutine(antScript.die(baseTime / 2));
-        }
-
+            Debug.Log("start phase1");
             foreach (DictionaryEntry antDE in NewAnts)
             {
                 //new ants
@@ -137,6 +141,21 @@ public class GameManager : MonoBehaviour
                     antObject.Health, antObject.Resource);
                 AntsTable.Add(antObject.Id, ant);
             }
+
+            foreach (Attack attack in turn.Attacks)
+            {
+                GameObject attacker = (GameObject) AntsTable[attack.AttackerId];
+                attacker.GetComponent<AntScript>().Attack(attack.DstRow, attack.DstCol, baseTime / 2);
+            }
+
+            foreach (DictionaryEntry antDE in cloneAntTable)
+            {
+                //dead ants
+                GameObject antScript = (GameObject) (antDE.Value);
+                AntsTable.Remove(antDE.Key);
+                StartCoroutine(antScript.GetComponent<AntScript>().die(baseTime / 4, baseTime / 4));
+            }
+
 
             Debug.Log("end phase1");
             yield return new WaitForSeconds(baseTime / 2);
