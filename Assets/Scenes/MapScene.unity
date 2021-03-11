@@ -338,6 +338,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8531062557001460216, guid: c96875b7a845a7143be803fea0004d49, type: 3}
+      propertyPath: m_Color.r
+      value: 0.3018868
+      objectReference: {fileID: 0}
+    - target: {fileID: 8531062557001460216, guid: c96875b7a845a7143be803fea0004d49, type: 3}
+      propertyPath: m_Color.g
+      value: 0.3018868
+      objectReference: {fileID: 0}
+    - target: {fileID: 8531062557001460216, guid: c96875b7a845a7143be803fea0004d49, type: 3}
+      propertyPath: m_Color.b
+      value: 0.3018868
+      objectReference: {fileID: 0}
     - target: {fileID: 8674794667826993965, guid: c96875b7a845a7143be803fea0004d49, type: 3}
       propertyPath: m_AnchorMin.y
       value: 0
@@ -504,6 +516,41 @@ PrefabInstance:
       objectReference: {fileID: 1509055357}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c96875b7a845a7143be803fea0004d49, type: 3}
+--- !u!1 &689220942 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3241652078898949051, guid: c96875b7a845a7143be803fea0004d49, type: 3}
+  m_PrefabInstance: {fileID: 397345935}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &689220943
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 689220942}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e0f9bb92873cd3b4696c57a7878fe2f6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &739202219 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2187552132597052580, guid: c96875b7a845a7143be803fea0004d49, type: 3}
+  m_PrefabInstance: {fileID: 397345935}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1294973057
 GameObject:
   m_ObjectHideFlags: 0
@@ -685,14 +732,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1509055355}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de722572bd399c04f85c24b357d360b4, type: 3}
+  m_Script: {fileID: 11500000, guid: 0e6dda28b97103a4e89340af0863e0ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  zoomSpeed: 1
+  moveSpeed: 4
+  zoomSpeed: 4
   boundary: 50
-  minSize: 1
-  maxSize: 20
+  minSize: 2
+  maxSize: 60
   myCamera: {fileID: 1509055357}
 --- !u!1 &1778195489
 GameObject:

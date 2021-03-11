@@ -14,24 +14,30 @@ public class MoveCamera : MonoBehaviour
     public float maxSize;
     private int width;
     private int height;
-    [SerializeField]
-    private Camera myCamera;
+    [SerializeField] private Camera myCamera;
+    private int maxX;
+    private int maxY;
 
-    void Awake()
-    {
-        width = Screen.width;
-        height = Screen.height;
-    }
+    private bool IsSet = false;
 
     public void setMaid(int maxX, int maxY)
     {
-        Debug.Log("setMaid x:"+ maxX + " y: "+ maxY);
-        myCamera.orthographicSize = Math.Max(maxY/2, maxX/2) + 2;
-        transform.position = new Vector3(maxX/2,maxY/2,-10f);
+        this.maxX = maxX;
+        this.maxY = maxY;
     }
 
     void Update()
     {
+        width = Screen.width;
+        height = Screen.height;
+        if (!IsSet)
+        {
+            Debug.Log("setMaid x:" + maxX + " y: " + maxY);
+            myCamera.orthographicSize = Math.Max(maxY / 2, maxX / 2) + 2;
+            transform.position = new Vector3(maxX / 2, y: -maxY / 2, -10f);
+            IsSet = true;
+        }
+
         if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
             myCamera.orthographicSize += zoomSpeed;
@@ -43,7 +49,7 @@ public class MoveCamera : MonoBehaviour
         }
 
         myCamera.orthographicSize =
-        Mathf.Clamp(myCamera.orthographicSize, minSize,maxSize);
+            Mathf.Clamp(myCamera.orthographicSize, minSize, maxSize);
 
         if (Input.mousePosition.x > width - boundary)
         {

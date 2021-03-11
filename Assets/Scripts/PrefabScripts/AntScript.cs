@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -81,7 +81,6 @@ public class AntScript : MonoBehaviour
         SetHealth(health);
         yield return new WaitForSeconds(baseTime / 2);
         temp = gameManager.ConvertPosition(x, y);
-        Debug.Log(temp);
         mainAnimator.Play("Walk");
         readTemp = true;
         reachTime = time+Time.time;
@@ -92,7 +91,7 @@ public class AntScript : MonoBehaviour
         if (readTemp)
         {
             float d = Vector2.Distance(transform.position, temp);
-            Debug.Log(d);
+            // Debug.Log(d);
             if (d < 0.5)
             {
                 readTemp = false;
@@ -118,8 +117,8 @@ public class AntScript : MonoBehaviour
 
     private void SetPosition(int x, int y)
     {
-        transform.position =
-            new Vector3(gameManager.x0 + x * gameManager.width, gameManager.y0 - y * gameManager.haight, 0);
+        transform.position = gameManager.ConvertPosition(x, y);
+        Debug.Log(transform.position);
     }
 
     private void SetSprite(int team, int type)
@@ -133,13 +132,18 @@ public class AntScript : MonoBehaviour
             }
             else
             {
+                transform.localScale = new Vector3(fighterScaleCorrection,fighterScaleCorrection,1);
                 mainAnimator.runtimeAnimatorController = redFighterAnimator;
+                GetComponent<SpriteRenderer>().color = redFighterColorCorrection;
             }
         }
         else//black team
         {
             if (type == 1)
+            {
+                transform.localScale = new Vector3(fighterScaleCorrection,fighterScaleCorrection,1);
                 mainAnimator.runtimeAnimatorController = blackFighterAnimator;
+            }
             else
                 mainAnimator.runtimeAnimatorController = blackWorkerAnimator;
         }

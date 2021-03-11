@@ -174,7 +174,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 58588113
   m_SortingLayer: -1
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 4544607149113696746, guid: f49bb474e34ba5c40a2c0d9ba13515f2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -198,10 +198,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c59769e94014ac58bf0c69cadd0e2ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worker1: {fileID: 21300000, guid: 8300dbc4fdba27b4fa28cd9ac6f11eee, type: 3}
-  worker2: {fileID: 21300000, guid: fb6b42b7597610442b83e6d903b1cca6, type: 3}
-  fighter1: {fileID: 21300000, guid: c8fee49f748e33b4bb0faef145da0a3f, type: 3}
-  fighter2: {fileID: 21300000, guid: d5172ff8a41729d4a82a1f70e5f02835, type: 3}
+  fighterScaleCorrection: 0.3
+  redFighterColorCorrection: {r: 1, g: 0.7311321, b: 0.7311321, a: 1}
   resource1: {fileID: 21300000, guid: b8203663ec4ca1a46a00e94dca9a797f, type: 3}
   resource2: {fileID: 21300000, guid: 3844160573469704d8631c395d746fc2, type: 3}
   resourceSpriteRenderer: {fileID: 1065421581315299470}

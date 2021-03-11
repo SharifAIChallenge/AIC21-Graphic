@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     private Hashtable AntsTable = new Hashtable();
     public int MaxTurns { get; private set; }
     private float baseTime;
+    public bool playAnime;
 
 
     public void StartGameManager(GameLog gameLog)
@@ -41,11 +42,12 @@ public class GameManager : MonoBehaviour
         Debug.Log(currTurn+" "+turn);
         if (currTurn == turn - 1)
         {
-            Debug.Log("anim move");
+            playAnime = true;
             StartCoroutine(ApplyTurnAnim(gameLog.Turns[turn - 1]));
         }
         else
         {
+            playAnime = false;
             ApplyTurnUnAnim(gameLog.Turns[turn - 1]);
         }
         currTurn = turn;
@@ -56,7 +58,7 @@ public class GameManager : MonoBehaviour
     {
         ChatManager.Instance.SetLeftChatMessages(turn.ChatBox0.Split(','));
         ChatManager.Instance.SetRightChatMessages(turn.ChatBox1.Split(','));
-        Debug.Log("applyTurn " + currTurn);
+        Debug.Log("unAnim move "+currTurn);
         foreach (GameObject temp in Temps)
         {
             Destroy(temp);
@@ -85,7 +87,7 @@ public class GameManager : MonoBehaviour
         //attack and dead and get recource and set recource and set base healthes
         ChatManager.Instance.SetLeftChatMessages(turn.ChatBox0.Split(','));
         ChatManager.Instance.SetRightChatMessages(turn.ChatBox1.Split(','));
-        Debug.Log("applyTurn " + currTurn);
+        Debug.Log("anim move " + currTurn);
         foreach (GameObject temp in Temps)
         {
             Destroy(temp);
@@ -125,24 +127,33 @@ public class GameManager : MonoBehaviour
             StartCoroutine(antScript.die(baseTime / 2));
         }
 
-        foreach (DictionaryEntry antDE in NewAnts)
-        {
-            //new ants
-            Ant antObject = (Ant) antDE.Value;
-            GameObject ant;
-            ant = Instantiate(antPrefab);
-            ant.GetComponent<AntScript>().Set(antObject.Row, antObject.Col, antObject.Team, antObject.Type,
-                antObject.Health, antObject.Resource);
-            AntsTable.Add(antObject.Id, ant);
-        }
+            foreach (DictionaryEntry antDE in NewAnts)
+            {
+                //new ants
+                Ant antObject = (Ant) antDE.Value;
+                GameObject ant;
+                ant = Instantiate(antPrefab);
+                ant.GetComponent<AntScript>().Set(antObject.Row, antObject.Col, antObject.Team, antObject.Type,
+                    antObject.Health, antObject.Resource);
+                AntsTable.Add(antObject.Id, ant);
+            }
 
-        yield return new WaitForSeconds(baseTime / 2);
-        //move ants time
-        foreach (DictionaryEntry antDE in MovingAnts)
-        {
-            Ant ant = (Ant) antDE.Value;
-            GameObject antScript = (GameObject) antDE.Key;
-            StartCoroutine(antScript.GetComponent<AntScript>().Go(ant.Row, ant.Col, ant.Health, ant.Resource, baseTime / 2));
+            Debug.Log("end phase1");
+            yield return new WaitForSeconds(baseTime / 2);
+            if (playAnime)
+            {
+                //move ants time
+                Debug.Log("start phase2");
+                foreach (DictionaryEntry antDE in MovingAnts)
+                {
+                    Ant ant = (Ant) antDE.Value;
+                    GameObject antScript = (GameObject) antDE.Key;
+                    StartCoroutine(antScript.GetComponent<AntScript>()
+                        .Go(ant.Row, ant.Col, ant.Health, ant.Resource, baseTime / 2));
+                }
+
+                Debug.Log("end phase2");
+            }
         }
     }
 

@@ -20,7 +20,7 @@ public class PoisonScript : MonoBehaviour
         if (move)
         {
             float d = Vector2.Distance(transform.position, temp);
-            Debug.Log(d);
+            // Debug.Log(d);
             if (d < 0.5)
             {
                 move = false;

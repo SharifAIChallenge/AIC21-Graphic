@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,8 +10,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
 
     private int TotalTurnsAmount = 100;
-
-    [SerializeField] public float BaseTime; 
+    [SerializeField] public float BaseTime;
     [SerializeField] private TMP_InputField TurnInputField;
     [SerializeField] private TextMeshProUGUI SpeedText;
     [SerializeField] private TextMeshProUGUI TurnText;
@@ -109,6 +108,7 @@ public class UIManager : MonoBehaviour
     {
         LeftChatMessagesCanvas.SetActive(!LeftChatMessagesCanvas.activeSelf);
     }
+
     public void OnRightToggleChatButtonClicked()
     {
         RightChatMessagesCanvas.SetActive(!RightChatMessagesCanvas.activeSelf);

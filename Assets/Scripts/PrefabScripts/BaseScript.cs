@@ -19,15 +19,6 @@ public class BaseScript : MonoBehaviour
 
     public void setHealth(int health)
     {
-        try
-        {
-
-            healthText.text = health.ToString();
-        }
-        catch (Exception e)
-        {
-            Debug.Log(gameObject.name);
-        }
         this.health = health;
         healthBar.SetHealth(health);
     }
