@@ -6,6 +6,9 @@ using Object = System.Object;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject InGame;
+    public GameObject GameLogBrowser;
+
     public GameObject antPrefab;
     public GameObject cell_empty;
     public GameObject cell_wall;
@@ -35,6 +38,9 @@ public class GameManager : MonoBehaviour
 
     public void StartGameManager(GameLog gameLog)
     {
+        GameLogBrowser.SetActive(false);
+        InGame.SetActive(true);
+
         baseTime = UIManager.Instance.BaseTime;
         this.gameLog = gameLog;
         base1.GetComponent<BaseScript>().SetMaxHealth(gameLog.Map.BaseHealth);

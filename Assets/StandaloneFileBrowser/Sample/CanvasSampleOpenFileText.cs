@@ -10,7 +10,6 @@ using SFB;
 [RequireComponent(typeof(Button))]
 public class CanvasSampleOpenFileText : MonoBehaviour, IPointerDownHandler 
 {
-    public Text output;
 
 #if UNITY_WEBGL && !UNITY_EDITOR
     //
@@ -41,7 +40,7 @@ public class CanvasSampleOpenFileText : MonoBehaviour, IPointerDownHandler
 
     private void OnClick() 
     {
-        var paths = StandaloneFileBrowser.OpenFilePanel("Title", "", "txt", false);
+        var paths = StandaloneFileBrowser.OpenFilePanel("Title", "", "json", false);
         if (paths.Length > 0) 
         {
             StartCoroutine(OutputRoutine(new System.Uri(paths[0]).AbsoluteUri));
@@ -53,8 +52,6 @@ public class CanvasSampleOpenFileText : MonoBehaviour, IPointerDownHandler
     {
         var loader = new WWW(url);
         yield return loader;
-        output.text = loader.text;
         GameLogReader.Instance.MakeLog(loader.text);
-
     }
 }

@@ -23,6 +23,8 @@ public class GameLogReader : MonoBehaviour
 
     public void MakeLog(string jsonStr)
     {
+        Debug.Log(jsonStr);
+
         GameDTO gameDTO = JsonUtility.FromJson<GameDTO>(jsonStr);
         // Debug.Log(JsonUtility.ToJson(gameDTO, prettyPrint: true));
 
