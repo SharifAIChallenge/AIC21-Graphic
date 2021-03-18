@@ -198,12 +198,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c59769e94014ac58bf0c69cadd0e2ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fighterScaleCorrection: 0.3
-  redFighterColorCorrection: {r: 1, g: 0.7311321, b: 0.7311321, a: 1}
+  worker1: {fileID: 0}
+  worker2: {fileID: 0}
+  fighter1: {fileID: 0}
+  fighter2: {fileID: 0}
   resource1: {fileID: 21300000, guid: b8203663ec4ca1a46a00e94dca9a797f, type: 3}
   resource2: {fileID: 21300000, guid: 3844160573469704d8631c395d746fc2, type: 3}
   resourceSpriteRenderer: {fileID: 1065421581315299470}
   healthText: {fileID: 8487496306917780867}
+  healthBar: {fileID: 6598139772843642957}
   redWorkerAnimator: {fileID: 9100000, guid: cebdc7f5463c7bd488815733f9c6ab75, type: 2}
   redFighterAnimator: {fileID: 9100000, guid: 4d4738f70357bf4428959c03017b8b1c, type: 2}
   blackWorkerAnimator: {fileID: 9100000, guid: 2c997a4853413a847a008b75e686e58b, type: 2}
@@ -526,3 +529,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 897281234225235143, guid: 7a7b86b3505bf8b49a1f5b34cdf6a6d1, type: 3}
   m_PrefabInstance: {fileID: 6332771004898263113}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6598139772843642957 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 897281233264971780, guid: 7a7b86b3505bf8b49a1f5b34cdf6a6d1, type: 3}
+  m_PrefabInstance: {fileID: 6332771004898263113}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4540f867562901408a044fb736cd4c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

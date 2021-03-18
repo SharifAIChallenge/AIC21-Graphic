@@ -1,6 +1,8 @@
 ﻿
 public class Ant
 {
+    public static readonly int WORKER = 0; //Todo check which is which
+    public static readonly int SOLDIER = 1;
     public int Id { get; }
     public int Team { get; }
     public int Type { get; }

@@ -90,7 +90,9 @@ public class GameManager : MonoBehaviour
         foreach (Ant ant in turn.Ants)
         {
             GameObject antObject = Instantiate(antPrefab);
-            antObject.GetComponent<AntScript>().Set(ant.Row, ant.Col, ant.Team, ant.Type, ant.Health, ant.Resource);
+            AntScript antScript = antObject.GetComponent<AntScript>();
+            antScript.SetMaxHealth(ant.Type == Ant.WORKER ? gameLog.Map.WorkerHealth : gameLog.Map.SoldierHealth);
+            antScript.Set(ant.Row, ant.Col, ant.Team, ant.Type, ant.Health, ant.Resource);
             AntsTable.Add(ant.Id, antObject);
         }
     }
@@ -143,7 +145,9 @@ public class GameManager : MonoBehaviour
                 Ant antObject = (Ant) antDE.Value;
                 GameObject ant;
                 ant = Instantiate(antPrefab);
-                ant.GetComponent<AntScript>().Set(antObject.Row, antObject.Col, antObject.Team, antObject.Type,
+                AntScript antScript = ant.GetComponent<AntScript>();
+                antScript.SetMaxHealth(antObject.Type == Ant.WORKER ? gameLog.Map.WorkerHealth : gameLog.Map.SoldierHealth);
+                antScript.Set(antObject.Row, antObject.Col, antObject.Team, antObject.Type,
                     antObject.Health, antObject.Resource);
                 AntsTable.Add(antObject.Id, ant);
             }
