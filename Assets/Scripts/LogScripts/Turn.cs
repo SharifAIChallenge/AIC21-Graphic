@@ -12,6 +12,7 @@ public class Turn
     public Attack[] Attacks { get; }
     public string ChatBox0 { get; }
     public string ChatBox1 { get; }
+    public List<int>[][] CellAnts { get; }
 
     public Turn(int base0Health, int base1Health, int[][] resources0, int[][] resources1, List<Ant> ants,
         Attack[] attacks, string chatBox0,string chatBox1)
@@ -24,5 +25,21 @@ public class Turn
         this.Attacks = attacks;
         ChatBox0 = chatBox0;
         ChatBox1 = chatBox1;
+
+        int rows = resources0.Length;
+        int cols = resources0[0].Length;
+        CellAnts = new List<int>[rows][];
+        for (int i = 0; i < rows; i++)
+        {
+            CellAnts[i] = new List<int>[cols];
+            for (int j = 0; j < cols; j++)
+            {
+                CellAnts[i][j] = new List<int>();
+            }
+        }
+        foreach (Ant ant in ants)
+        {
+            CellAnts[ant.Row][ant.Col].Add(ant.Id);
+        }
     }
 }

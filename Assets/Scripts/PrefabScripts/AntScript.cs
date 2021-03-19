@@ -14,6 +14,7 @@ public class AntScript : MonoBehaviour
     public Sprite resource2;
     public SpriteRenderer resourceSpriteRenderer;
     public Text healthText;
+    public HealthBar healthBar;
     [SerializeField]
     private RuntimeAnimatorController redWorkerAnimator;
     [SerializeField]
@@ -172,6 +173,13 @@ public class AntScript : MonoBehaviour
 
     private void SetHealth(int health)
     {
-        //todo slider health
+        this.healthBar.SetHealth(health);
+        this.health = health;
+    }
+
+    public void SetMaxHealth(int maxHealth)
+    {
+        this.healthBar.SetMaxHealth(maxHealth);
+        this.health = maxHealth;
     }
 }

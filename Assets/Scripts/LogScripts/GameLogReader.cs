@@ -9,13 +9,22 @@ using UnityEngine.Networking;
 
 public class GameLogReader : MonoBehaviour
 {
+    public static GameLogReader Instance;
+
     public bool isWebGL;
     public TextMeshProUGUI TextMeshProUgui;
 
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     public GameLog GameLog { get; private set; }
 
-    private void MakeLog(string jsonStr)
+    public void MakeLog(string jsonStr)
     {
+        Debug.Log(jsonStr);
+
         GameDTO gameDTO = JsonUtility.FromJson<GameDTO>(jsonStr);
         // Debug.Log(JsonUtility.ToJson(gameDTO, prettyPrint: true));
 
@@ -89,32 +98,6 @@ public class GameLogReader : MonoBehaviour
         }
 
         this.GameLog = new GameLog(map, turns);
-    }
-    
-    private void Start()
-    {
-        try
-        {
-            if (isWebGL)
-            {
-                
-            }
-            else // desktop app
-            {
-                string jsonStr = File.ReadAllText("./test1.json");
-                MakeLog(jsonStr); 
-               GameManager.Instance.StartGameManager(GameLog);
-            }
-        }
-        catch (Exception x)
-        {
-            Debug.Log(x.Data);
-        }
-    }
-
-    public void WebGLSetJson(string json)
-    {
-        MakeLog(json); 
-       GameManager.Instance.StartGameManager(GameLog);
+        GameManager.Instance.StartGameManager(GameLog);
     }
 }
