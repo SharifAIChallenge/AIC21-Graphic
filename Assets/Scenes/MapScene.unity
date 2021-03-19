@@ -510,6 +510,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8674794669425296520, guid: c96875b7a845a7143be803fea0004d49, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2.9000015
+      objectReference: {fileID: 0}
     - target: {fileID: 8674794669486866726, guid: c96875b7a845a7143be803fea0004d49, type: 3}
       propertyPath: m_Camera
       value: 
@@ -580,7 +584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56b765fb1effe094e8a98b2383ce6ae5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isWebGL: 0
+  isWebGL: 1
   TextMeshProUgui: {fileID: 739202219}
 --- !u!4 &1294973059
 Transform:
@@ -781,7 +785,6 @@ MonoBehaviour:
   y0: 0
   width: 2
   haight: 2
-  playAnime: 0
 --- !u!4 &1778195491
 Transform:
   m_ObjectHideFlags: 0
