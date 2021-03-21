@@ -26,14 +26,12 @@ public class GameManager : MonoBehaviour
     private Hashtable AntsTable = new Hashtable();
     public int MaxTurns { get; private set; }
     private float baseTime;
-    [HideInInspector]
-    private bool playAnime;
+    [HideInInspector] private bool playAnime;
 
-    public static GameManager Instance  { get; private set; }
+    public static GameManager Instance { get; private set; }
 
     private void Awake()
     {
-        
         Instance = this;
     }
 
@@ -90,10 +88,12 @@ public class GameManager : MonoBehaviour
         AntsTable.Clear();
         foreach (Ant ant in turn.Ants)
         {
+            int numbers = Mathf.NextPowerOfTwo(turn.CellAnts[ant.Row][ant.Col].Count);
+            int n = turn.CellAnts[ant.Row][ant.Col].IndexOf(ant.Id) + 1;
             GameObject antObject = Instantiate(antPrefab);
             AntScript antScript = antObject.GetComponent<AntScript>();
             antScript.SetMaxHealth(ant.Type == Ant.WORKER ? gameLog.Map.WorkerHealth : gameLog.Map.SoldierHealth);
-            antScript.Set(ant.Row, ant.Col, ant.Team, ant.Type, ant.Health, ant.Resource);
+            antScript.Set(ant.Row, ant.Col, ant.Team, ant.Type, ant.Health, ant.Resource,numbers,n);
             AntsTable.Add(ant.Id, antObject);
         }
     }
@@ -103,7 +103,7 @@ public class GameManager : MonoBehaviour
         //attack and dead and get recource and set recource and set base healthes
         ChatManager.Instance.SetLeftChatMessages(turn.ChatBox0.Split(','));
         ChatManager.Instance.SetRightChatMessages(turn.ChatBox1.Split(','));
-        Debug.Log("anim move " + currTurn);
+        // Debug.Log("anim move " + currTurn);
         foreach (GameObject temp in Temps)
         {
             Destroy(temp);
@@ -139,17 +139,21 @@ public class GameManager : MonoBehaviour
 
         if (playAnime)
         {
-            Debug.Log("start phase1");
+            // Debug.Log("start phase1");
             foreach (DictionaryEntry antDE in NewAnts)
             {
                 //new ants
                 Ant antObject = (Ant) antDE.Value;
                 GameObject ant;
+                int numbers = Mathf.NextPowerOfTwo(turn.CellAnts[antObject.Row][antObject.Col].Count);
+                int n = turn.CellAnts[antObject.Row][antObject.Col].IndexOf(antObject.Id) + 1;
                 ant = Instantiate(antPrefab);
                 AntScript antScript = ant.GetComponent<AntScript>();
-                antScript.SetMaxHealth(antObject.Type == Ant.WORKER ? gameLog.Map.WorkerHealth : gameLog.Map.SoldierHealth);
+                antScript.SetMaxHealth(antObject.Type == Ant.WORKER
+                    ? gameLog.Map.WorkerHealth
+                    : gameLog.Map.SoldierHealth);
                 antScript.Set(antObject.Row, antObject.Col, antObject.Team, antObject.Type,
-                    antObject.Health, antObject.Resource);
+                    antObject.Health, antObject.Resource,numbers,n);
                 AntsTable.Add(antObject.Id, ant);
             }
 
@@ -168,21 +172,23 @@ public class GameManager : MonoBehaviour
             }
 
 
-            Debug.Log("end phase1");
+            // Debug.Log("end phase1");
             yield return new WaitForSeconds(baseTime / 2);
             if (playAnime)
             {
                 //move ants time
-                Debug.Log("start phase2");
+                // Debug.Log("start phase2");
                 foreach (DictionaryEntry antDE in MovingAnts)
                 {
                     Ant ant = (Ant) antDE.Value;
+                    int numbers = Mathf.NextPowerOfTwo(turn.CellAnts[ant.Row][ant.Col].Count);
+                    int n = turn.CellAnts[ant.Row][ant.Col].IndexOf(ant.Id) + 1;
                     GameObject antScript = (GameObject) antDE.Key;
                     StartCoroutine(antScript.GetComponent<AntScript>()
-                        .Go(ant.Row, ant.Col, ant.Health, ant.Resource, baseTime / 2));
+                        .Go(ant.Row, ant.Col, ant.Health, ant.Resource, baseTime / 2,numbers,n));
                 }
 
-                Debug.Log("end phase2");
+                // Debug.Log("end phase2");
             }
         }
     }
