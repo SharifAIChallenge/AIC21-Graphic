@@ -41,8 +41,8 @@ public class UIManager : MonoBehaviour
         if (Time.time > LastApplyTime + BaseTime && CurrentTurn < TotalTurnsAmount)
         {
             CurrentTurn += 1;
-            ApplyTurn(CurrentTurn.ToString());
-            Debug.Log(CurrentTurn);
+            ApplyTurn(CurrentTurn.ToString(), true);
+            // Debug.Log("apply turn "+CurrentTurn+" ui update");
         }
     }
 
@@ -52,18 +52,18 @@ public class UIManager : MonoBehaviour
         if (int.Parse(turnToGo) <= TotalTurnsAmount && int.Parse(turnToGo) > 0)
         {
             CurrentTurn = int.Parse(turnToGo);
-            ApplyTurn(turnToGo);
+            ApplyTurn(turnToGo, false);
         }
 
         TurnInputField.text = "";
     }
 
-    private void ApplyTurn(string turnToGo)
+    private void ApplyTurn(string turnToGo, bool isAnim)
     {
         SetTurnText(turnToGo);
         LastApplyTime = Time.time;
         ChatManager.Instance.ClearChatBoxes();
-        GameManager.ApplyLog(CurrentTurn);
+        GameManager.ApplyLog(CurrentTurn, isAnim);
     }
 
     private void SetTurnText(string turnToGo)
@@ -77,7 +77,7 @@ public class UIManager : MonoBehaviour
         if (turnToGo <= TotalTurnsAmount && turnToGo > 0)
         {
             CurrentTurn = turnToGo;
-            ApplyTurn(turnToGo.ToString());
+            ApplyTurn(turnToGo.ToString(), false);
         }
     }
 
@@ -87,7 +87,7 @@ public class UIManager : MonoBehaviour
         if (turnToGo <= TotalTurnsAmount && turnToGo > 0)
         {
             CurrentTurn = turnToGo;
-            ApplyTurn(turnToGo.ToString());
+            ApplyTurn(turnToGo.ToString(), false);
         }
     }
 
