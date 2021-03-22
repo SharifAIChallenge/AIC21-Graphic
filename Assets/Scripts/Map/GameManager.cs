@@ -94,7 +94,7 @@ public class GameManager : MonoBehaviour
             GameObject antObject = Instantiate(antPrefab);
             AntScript antScript = antObject.GetComponent<AntScript>();
             antScript.SetMaxHealth(ant.Type == Ant.WORKER ? gameLog.Map.WorkerHealth : gameLog.Map.SoldierHealth);
-            antScript.Set(ant.Row, ant.Col, ant.Team, ant.Type, ant.Health, ant.Resource,numbers,n);
+            antScript.Set(ant.Row, ant.Col, ant.Team, ant.Type, ant.Health, ant.Resource,ant.Id,numbers,n);
             AntsTable.Add(ant.Id, antObject);
         }
     }
@@ -154,7 +154,7 @@ public class GameManager : MonoBehaviour
                     ? gameLog.Map.WorkerHealth
                     : gameLog.Map.SoldierHealth);
                 antScript.Set(antObject.Row, antObject.Col, antObject.Team, antObject.Type,
-                    antObject.Health, antObject.Resource,numbers,n);
+                    antObject.Health, antObject.Resource,antObject.Id,numbers,n);
                 AntsTable.Add(antObject.Id, ant);
             }
 
