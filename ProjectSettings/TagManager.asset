@@ -46,6 +46,9 @@ TagManager:
   - name: map-objects
     uniqueID: 58588113
     locked: 0
+  - name: UI
+    uniqueID: 2535382569
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

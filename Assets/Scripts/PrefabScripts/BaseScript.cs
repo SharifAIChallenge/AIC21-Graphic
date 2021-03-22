@@ -11,8 +11,22 @@ public class BaseScript : MonoBehaviour
     private int maxHealth;
     private int health;
 
+    private void SetHealthBar()
+    {
+        string tag =  "BaseHealth1";
+            Debug.Log(gameObject.name);
+        if (gameObject.name == "base2")
+        {
+            tag = "BaseHealth2";
+        }
+        healthBar = GameObject.FindWithTag(tag).GetComponent<HealthBar>();
+        // GameObject.FindWithTag(tag).tag = "Untagged";
+    }
+
     public void SetMaxHealth(int maxHealth)
     {
+        if(healthBar == null)
+            SetHealthBar();
         this.maxHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
     }

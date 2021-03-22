@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,10 +6,8 @@ using UnityEngine.UI;
 
 public class AntScript : MonoBehaviour
 {
-    public Sprite worker1;
-    public Sprite worker2;
-    public Sprite fighter1;
-    public Sprite fighter2;
+    [SerializeField] private float fighterScaleCorrection;
+    [SerializeField] private Color redFighterColorCorrection;
     public Sprite resource1;
     public Sprite resource2;
     public SpriteRenderer resourceSpriteRenderer;

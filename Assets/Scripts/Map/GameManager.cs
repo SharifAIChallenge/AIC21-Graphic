@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -49,10 +49,10 @@ public class GameManager : MonoBehaviour
         MaxTurns = gameLog.Turns.Length;
     }
 
-    public void ApplyLog(int turn)
+    public void ApplyLog(int turn, bool isAnim)
     {
-        Debug.Log(currTurn+" "+turn);
-        if (currTurn == turn - 1)
+        // Debug.Log(currTurn + "    " + turn);
+        if (currTurn == turn - 1 && isAnim)
         {
             playAnime = true;
             StartCoroutine(ApplyTurnAnim(gameLog.Turns[turn - 1]));
@@ -62,6 +62,7 @@ public class GameManager : MonoBehaviour
             playAnime = false;
             ApplyTurnUnAnim(gameLog.Turns[turn - 1]);
         }
+
         currTurn = turn;
     }
 
