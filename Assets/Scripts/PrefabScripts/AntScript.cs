@@ -11,7 +11,7 @@ public class AntScript : MonoBehaviour
     public Sprite resource1;
     public Sprite resource2;
     public SpriteRenderer resourceSpriteRenderer;
-    public Text healthText;
+    public Text IdText;
     public HealthBar healthBar;
     [SerializeField] private RuntimeAnimatorController redWorkerAnimator;
     [SerializeField] private RuntimeAnimatorController redFighterAnimator;
@@ -23,6 +23,7 @@ public class AntScript : MonoBehaviour
 
     private int x;
     private int y;
+    private int id;
     private int health;
     private int recource;
     private int team;
@@ -41,10 +42,12 @@ public class AntScript : MonoBehaviour
         mainAnimator = GetComponent<Animator>();
     }
 
-    public void Set(int x, int y, int team, int type, int health, int recource, int numbers, int n)
+    public void Set(int x, int y, int team, int type, int health, int recource, int Id, int numbers, int n)
     {
         this.x = x;
         this.y = y;
+        id = Id;
+        IdText.text = id.ToString();
         this.recource = recource;
         this.health = health;
         this.team = team;

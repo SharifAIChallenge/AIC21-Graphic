@@ -37,6 +37,10 @@ public class MoveCamera : MonoBehaviour
             myCamera.orthographicSize -= zoomSpeed;
         }
 
+        if (myCamera.orthographicSize < 0)
+        {
+            myCamera.orthographicSize = 0;
+        }
         if (Input.GetMouseButtonDown(2))
         {
             dragOrigin = Input.mousePosition;
