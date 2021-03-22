@@ -6,6 +6,8 @@ TagManager:
   tags:
   - GameManager
   - GameLogReader
+  - BaseHealth1
+  - BaseHealth2
   layers:
   - Default
   - TransparentFX

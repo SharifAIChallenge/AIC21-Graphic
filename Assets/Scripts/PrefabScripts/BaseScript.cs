@@ -20,7 +20,6 @@ public class BaseScript : MonoBehaviour
             tag = "BaseHealth2";
         }
         healthBar = GameObject.FindWithTag(tag).GetComponent<HealthBar>();
-        // GameObject.FindWithTag(tag).tag = "Untagged";
     }
 
     public void SetMaxHealth(int maxHealth)

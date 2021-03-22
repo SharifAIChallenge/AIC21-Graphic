@@ -7,36 +7,25 @@ using System.Collections;
 
 public class MoveCamera : MonoBehaviour
 {
-    public float moveSpeed = 10.0f;
+    public float dragSpeed = 2;
+    private Vector3 dragOrigin;
     public float zoomSpeed = 10.0f;
-    public int boundary = 50;
-    public float minSize;
-    public float maxSize;
-    private int width;
-    private int height;
     [SerializeField] private Camera myCamera;
-    private int maxX;
-    private int maxY;
 
     private bool IsSet = false;
 
     public void setMaid(int maxX, int maxY)
     {
-        this.maxX = maxX;
-        this.maxY = maxY;
+        Debug.Log("setMaid x:" + maxX + " y: " + maxY);
+        myCamera.orthographicSize = Math.Max(maxY / 2, maxX / 2) + 2;
+        transform.position = new Vector3(maxX / 2, y: -maxY / 2, -10f);
+        IsSet = true;
     }
 
     void Update()
     {
-        width = Screen.width;
-        height = Screen.height;
-        if (!IsSet)
-        {
-            Debug.Log("setMaid x:" + maxX + " y: " + maxY);
-            myCamera.orthographicSize = Math.Max(maxY / 2, maxX / 2) + 2;
-            transform.position = new Vector3(maxX / 2, y: -maxY / 2, -10f);
-            IsSet = true;
-        }
+  
+
 
         if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
@@ -48,27 +37,17 @@ public class MoveCamera : MonoBehaviour
             myCamera.orthographicSize -= zoomSpeed;
         }
 
-        myCamera.orthographicSize =
-            Mathf.Clamp(myCamera.orthographicSize, minSize, maxSize);
-
-        if (Input.mousePosition.x > width - boundary)
+        if (Input.GetMouseButtonDown(2))
         {
-            transform.Translate(new Vector3(+Time.deltaTime * moveSpeed, 0.0f));
+            dragOrigin = Input.mousePosition;
+            return;
         }
 
-        if (Input.mousePosition.x < 0 + boundary)
-        {
-            transform.Translate(new Vector3(-Time.deltaTime * moveSpeed, 0.0f));
-        }
+        if (!Input.GetMouseButton(2)) return;
 
-        if (Input.mousePosition.y > height - boundary)
-        {
-            transform.Translate(new Vector3(0.0f, +Time.deltaTime * moveSpeed));
-        }
+        Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition - dragOrigin);
+        Vector3 move = new Vector3(-pos.x * dragSpeed, -pos.y * dragSpeed, 0);
 
-        if (Input.mousePosition.y < 0 + boundary)
-        {
-            transform.Translate(new Vector3(0.0f, -Time.deltaTime * moveSpeed));
-        }
+        transform.Translate(move, Space.World);
     }
 }
