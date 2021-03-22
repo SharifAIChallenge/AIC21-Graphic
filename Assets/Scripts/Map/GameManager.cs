@@ -69,8 +69,8 @@ public class GameManager : MonoBehaviour
 
     private void ApplyTurnUnAnim(Turn turn)
     {
-        ChatManager.Instance.SetLeftChatMessages(turn.ChatBox0.Split(','));
-        ChatManager.Instance.SetRightChatMessages(turn.ChatBox1.Split(','));
+        ChatManager.Instance.SetLeftChatMessages(turn.ImportantChatBox0, turn.TrivialChatBox0);
+        ChatManager.Instance.SetRightChatMessages(turn.ImportantChatBox1, turn.TrivialChatBox1);
         Debug.Log("unAnim move " + currTurn);
         foreach (GameObject temp in Temps)
         {
@@ -102,8 +102,8 @@ public class GameManager : MonoBehaviour
     private IEnumerator ApplyTurnAnim(Turn turn)
     {
         //attack and dead and get recource and set recource and set base healthes
-        ChatManager.Instance.SetLeftChatMessages(turn.ChatBox0.Split(','));
-        ChatManager.Instance.SetRightChatMessages(turn.ChatBox1.Split(','));
+        ChatManager.Instance.SetLeftChatMessages(turn.ImportantChatBox0, turn.TrivialChatBox0);
+        ChatManager.Instance.SetRightChatMessages(turn.ImportantChatBox1, turn.TrivialChatBox1);
         // Debug.Log("anim move " + currTurn);
         foreach (GameObject temp in Temps)
         {

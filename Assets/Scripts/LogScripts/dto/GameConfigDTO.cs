@@ -7,4 +7,6 @@ public class GameConfigDTO
     public int worker_health;
     public int soldier_health;
     public CellTypeDTO[] cells_type;
+    public string team0_name;
+    public string team1_name;
 }

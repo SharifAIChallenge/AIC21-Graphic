@@ -9,12 +9,16 @@ public class Map
     public int BaseHealth { get; set; }
     public int WorkerHealth { get; set; }
     public int SoldierHealth { get; set; }
+    public string Team0Name { get; set; }
+    public string Team1Name { get; set; }
 
-    public Map(int[][] cells, int baseHealth, int workerHealth, int soldierHealth)
+    public Map(int[][] cells, int baseHealth, int workerHealth, int soldierHealth, string team0Name, string team1Name)
     {
         this.cells = cells;
         this.BaseHealth = baseHealth;
         this.WorkerHealth = workerHealth;
         this.SoldierHealth = soldierHealth;
+        this.Team0Name = team0Name;
+        this.Team1Name = team1Name;
     }
 }
