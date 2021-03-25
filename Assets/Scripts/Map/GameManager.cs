@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using Object = System.Object;
 
@@ -24,6 +25,16 @@ public class GameManager : MonoBehaviour
     public int haight;
     private List<GameObject> Temps = new List<GameObject>();
     private Hashtable AntsTable = new Hashtable();
+    [SerializeField]private TextMeshProUGUI team0_alive_workers;
+    [SerializeField]private TextMeshProUGUI team0_alive_soldiers;
+    [SerializeField]private TextMeshProUGUI team0_total_resource0;
+    [SerializeField]private TextMeshProUGUI team0_total_resource1;
+    [SerializeField]private TextMeshProUGUI team1_alive_workers;
+    [SerializeField]private TextMeshProUGUI team1_alive_soldiers;
+    [SerializeField]private TextMeshProUGUI team1_total_resource0;
+    [SerializeField]private TextMeshProUGUI team1_total_resource1;
+    [SerializeField]private TextMeshProUGUI team0_name;
+    [SerializeField]private TextMeshProUGUI team1_name;
     public int MaxTurns { get; private set; }
     private float baseTime;
     [HideInInspector] private bool playAnime;
@@ -51,7 +62,7 @@ public class GameManager : MonoBehaviour
 
     public void ApplyLog(int turn, bool isAnim)
     {
-        // Debug.Log(currTurn + "    " + turn);
+        Debug.Log(currTurn + "    " + turn);
         if (currTurn == turn - 1 && isAnim)
         {
             playAnime = true;
@@ -69,6 +80,14 @@ public class GameManager : MonoBehaviour
 
     private void ApplyTurnUnAnim(Turn turn)
     {
+        team0_alive_workers.text = turn.team0_alive_workers.ToString();
+        team0_alive_soldiers.text = turn.team0_alive_soldiers.ToString();
+        team0_total_resource0.text = turn.team0_total_resource0.ToString();
+        team0_total_resource1.text = turn.team0_total_resource1.ToString();
+        team1_alive_workers.text = turn.team1_alive_workers.ToString();
+        team1_alive_soldiers.text = turn.team1_alive_soldiers.ToString();
+        team1_total_resource0.text = turn.team1_total_resource0.ToString();
+        team1_total_resource1.text = turn.team1_total_resource1.ToString();
         ChatManager.Instance.SetLeftChatMessages(turn.ImportantChatBox0, turn.TrivialChatBox0);
         ChatManager.Instance.SetRightChatMessages(turn.ImportantChatBox1, turn.TrivialChatBox1);
         Debug.Log("unAnim move " + currTurn);
@@ -101,6 +120,14 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator ApplyTurnAnim(Turn turn)
     {
+        team0_alive_workers.text = turn.team0_alive_workers.ToString();
+        team0_alive_soldiers.text = turn.team0_alive_soldiers.ToString();
+        team0_total_resource0.text = turn.team0_total_resource0.ToString();
+        team0_total_resource1.text = turn.team0_total_resource1.ToString();
+        team1_alive_workers.text = turn.team1_alive_workers.ToString();
+        team1_alive_soldiers.text = turn.team1_alive_soldiers.ToString();
+        team1_total_resource0.text = turn.team1_total_resource0.ToString();
+        team1_total_resource1.text = turn.team1_total_resource1.ToString();
         //attack and dead and get recource and set recource and set base healthes
         ChatManager.Instance.SetLeftChatMessages(turn.ImportantChatBox0, turn.TrivialChatBox0);
         ChatManager.Instance.SetRightChatMessages(turn.ImportantChatBox1, turn.TrivialChatBox1);
@@ -174,7 +201,7 @@ public class GameManager : MonoBehaviour
 
 
             // Debug.Log("end phase1");
-            yield return new WaitForSeconds(baseTime / 2);
+            yield return new WaitForSecondsRealtime((baseTime / 2)*UIManager.Instance.Speed);
             if (playAnime)
             {
                 //move ants time
@@ -212,6 +239,8 @@ public class GameManager : MonoBehaviour
 
     private void ShowMap()
     {
+        team0_name.text = gameLog.Map.Team0Name;
+        team1_name.text = gameLog.Map.Team1Name;
         for (int i = 0; i < gameLog.Map.cells.Length; i++)
         {
             for (int j = 0; j < gameLog.Map.cells[0].Length; j++)

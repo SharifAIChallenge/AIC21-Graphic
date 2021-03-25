@@ -43,7 +43,7 @@ public class GameLogReader : MonoBehaviour
             cells[cellTypeDTO.row][cellTypeDTO.col] = cellTypeDTO.cell_type;
         }
 
-        Map map = new Map(cells, gameConfigDTO.base_health, gameConfigDTO.worker_health, 
+        Map map = new Map(cells, gameConfigDTO.base_health, gameConfigDTO.worker_health,
             gameConfigDTO.soldier_health, gameConfigDTO.team0_name, gameConfigDTO.team1_name);
 
         //making turns
@@ -101,6 +101,7 @@ public class GameLogReader : MonoBehaviour
                 ChatDTO chatDTO = turnDTO.important_chat_box_0[i];
                 importantChatBox0[i] = new Chat(chatDTO.text, chatDTO.value, chatDTO.sender_id);
             }
+
             len = turnDTO.important_chat_box_1.Length;
             Chat[] importantChatBox1 = new Chat[len];
             for (int i = 0; i < len; i++)
@@ -108,6 +109,7 @@ public class GameLogReader : MonoBehaviour
                 ChatDTO chatDTO = turnDTO.important_chat_box_1[i];
                 importantChatBox1[i] = new Chat(chatDTO.text, chatDTO.value, chatDTO.sender_id);
             }
+
             len = turnDTO.trivial_chat_box_0.Length;
             Chat[] trivialChatBox0 = new Chat[len];
             for (int i = 0; i < len; i++)
@@ -115,6 +117,7 @@ public class GameLogReader : MonoBehaviour
                 ChatDTO chatDTO = turnDTO.trivial_chat_box_0[i];
                 trivialChatBox0[i] = new Chat(chatDTO.text, chatDTO.value, chatDTO.sender_id);
             }
+
             len = turnDTO.trivial_chat_box_1.Length;
             Chat[] trivialChatBox1 = new Chat[len];
             for (int i = 0; i < len; i++)
@@ -124,7 +127,24 @@ public class GameLogReader : MonoBehaviour
             }
 
             turns[turnDTO.turn_num] = new Turn(base0Health, base1Health, resources0, resources1, ants, attacks,
-                importantChatBox0, importantChatBox1, trivialChatBox0, trivialChatBox1);
+                importantChatBox0, importantChatBox1, trivialChatBox0, trivialChatBox1,
+                turnDTO.team0_alive_workers,
+                turnDTO.team0_total_workers,
+                turnDTO.team0_alive_soldiers,
+                turnDTO.team0_total_soldiers,
+                turnDTO.team0_current_resource0,
+                turnDTO.team0_total_resource0,
+                turnDTO.team0_current_resource1,
+                turnDTO.team0_total_resource1,
+                turnDTO.team1_alive_workers,
+                turnDTO.team1_total_workers,
+                turnDTO.team1_alive_soldiers,
+                turnDTO.team1_total_soldiers,
+                turnDTO.team1_current_resource0,
+                turnDTO.team1_total_resource0,
+                turnDTO.team1_current_resource1,
+                turnDTO.team1_total_resource1
+            );
         }
 
         this.GameLog = new GameLog(map, turns);

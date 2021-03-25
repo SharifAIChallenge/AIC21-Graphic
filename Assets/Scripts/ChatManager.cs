@@ -48,11 +48,11 @@ public class ChatManager : MonoBehaviour
     {
         for (int i = 0; i < PanelRight.gameObject.transform.childCount; i++)
         {
-            Destroy(PanelRight.gameObject.transform.GetChild(i));
+            Destroy(PanelRight.gameObject.transform.GetChild(i).gameObject);
         }
         for (int i = 0; i < PanelLeft.gameObject.transform.childCount; i++)
         {
-            Destroy(PanelLeft.gameObject.transform.GetChild(i));
+            Destroy(PanelLeft.gameObject.transform.GetChild(i).gameObject);
         }
     }
 

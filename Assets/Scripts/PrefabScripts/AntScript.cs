@@ -8,11 +8,12 @@ public class AntScript : MonoBehaviour
 {
     [SerializeField] private float fighterScaleCorrection;
     [SerializeField] private Color redFighterColorCorrection;
-    public Sprite resource1;
-    public Sprite resource2;
-    public SpriteRenderer resourceSpriteRenderer;
-    public Text IdText;
-    public HealthBar healthBar;
+    [SerializeField] private Sprite resource1;
+    [SerializeField] private Sprite resource2;
+    [SerializeField] private SpriteRenderer resourceSpriteRenderer;
+    [SerializeField] private Text IdText;
+    [SerializeField] private Text ScorpionIdText;
+    [SerializeField] private HealthBar healthBar;
     [SerializeField] private RuntimeAnimatorController redWorkerAnimator;
     [SerializeField] private RuntimeAnimatorController redFighterAnimator;
     [SerializeField] private RuntimeAnimatorController blackWorkerAnimator;
@@ -47,14 +48,18 @@ public class AntScript : MonoBehaviour
         this.x = x;
         this.y = y;
         id = Id;
-        IdText.text = id.ToString();
+        if (type == 0)
+            ScorpionIdText.text = id.ToString();
+        else
+            IdText.text = id.ToString();
         this.recource = recource;
         this.health = health;
         this.team = team;
         this.type = type;
         SetSprite(team, type);
         SetPosition(x, y);
-        transform.position = GameManager.Instance.ConvertPosition(x, y) + handleMulty(numbers, n, GameManager.Instance.width);
+        transform.position = GameManager.Instance.ConvertPosition(x, y) +
+                             handleMulty(numbers, n, GameManager.Instance.width);
         if (type == 1)
             SetResource(recource);
         SetHealth(health);
@@ -70,7 +75,7 @@ public class AntScript : MonoBehaviour
         int ys = n % numbersRoot;
         if (ys == 0)
             ys = numbersRoot;
-        Vector3 mPosition = new Vector3((-numbersMid + ys ) * width / numbersRoot,
+        Vector3 mPosition = new Vector3((-numbersMid + ys) * width / numbersRoot,
             (numbersMid - sx) * width / numbersRoot, 1);
         transform.localScale = baseScale / numbersRoot;
         return mPosition;
@@ -86,7 +91,7 @@ public class AntScript : MonoBehaviour
             SetResource(recource);
         SetHealth(health);
         // yield return new WaitForSeconds(baseTime / 2);
-        yield return new WaitForSeconds(0);
+        yield return null;
         temp = GameManager.Instance.ConvertPosition(x, y) + handleMulty(numbers, n, GameManager.Instance.width);
         mainAnimator.Play("Walk");
         readTemp = true;
@@ -129,9 +134,9 @@ public class AntScript : MonoBehaviour
 
     public IEnumerator die(float deadTime, float destroyTime)
     {
-        yield return new WaitForSeconds(deadTime);
+        yield return new WaitForSecondsRealtime(deadTime*UIManager.Instance.Speed);
         mainAnimator.Play("Die");
-        yield return new WaitForSeconds(destroyTime);
+        yield return new WaitForSecondsRealtime(destroyTime*UIManager.Instance.Speed);
         Destroy(gameObject);
     }
 
@@ -143,9 +148,10 @@ public class AntScript : MonoBehaviour
 
     private void SetSprite(int team, int type)
     {
+        //1:worker 0:fighter
         if (team == 0) //red team
         {
-            if (type == 0)
+            if (type == 1)
             {
                 mainAnimator.runtimeAnimatorController = redWorkerAnimator;
                 mainAnimator.Play("Idle");
@@ -160,7 +166,7 @@ public class AntScript : MonoBehaviour
         }
         else //black team
         {
-            if (type == 1)
+            if (type == 0)
             {
                 transform.localScale = new Vector3(fighterScaleCorrection, fighterScaleCorrection, 1);
                 baseScale = new Vector3(fighterScaleCorrection, fighterScaleCorrection, 1);
@@ -173,17 +179,21 @@ public class AntScript : MonoBehaviour
 
     private void SetResource(int resource)
     {
+        Vector2 size = resourceSpriteRenderer.size;
         switch (resource)
         {
-            case 1:
+            case 0:
                 resourceSpriteRenderer.sprite = resource1;
                 break;
-            case 2:
+            case 1:
                 resourceSpriteRenderer.sprite = resource2;
+                break;
+            case 2:
+                resourceSpriteRenderer.sprite = null;
                 break;
         }
 
-        resourceSpriteRenderer.size = new Vector2(0.5f, 0.5f);
+        resourceSpriteRenderer.size = size;
     }
 
     private void SetHealth(int health)

@@ -11,7 +11,7 @@ public class MoveCamera : MonoBehaviour
     private Vector3 dragOrigin;
     public float zoomSpeed = 10.0f;
     [SerializeField] private Camera myCamera;
-
+    private float lastZoom;
     private bool IsSet = false;
 
     public void setMaid(int maxX, int maxY)
@@ -24,9 +24,7 @@ public class MoveCamera : MonoBehaviour
 
     void Update()
     {
-  
-
-
+        lastZoom = myCamera.orthographicSize;
         if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
             myCamera.orthographicSize += zoomSpeed;
@@ -53,5 +51,10 @@ public class MoveCamera : MonoBehaviour
         Vector3 move = new Vector3(-pos.x * dragSpeed, -pos.y * dragSpeed, 0);
 
         transform.Translate(move, Space.World);
+    }
+
+    public void onScrool()
+    {
+        myCamera.orthographicSize = lastZoom;
     }
 }

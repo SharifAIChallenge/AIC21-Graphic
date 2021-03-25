@@ -17,19 +17,20 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject LeftChatMessagesCanvas;
     [SerializeField] private GameObject RightChatMessagesCanvas;
     private GameManager GameManager;
-    private float Speed = 1;
+    public float Speed = 1;
     private float LastApplyTime = 0;
     private int CurrentTurn = 0;
 
     private void Awake()
     {
-        GameManager = (GameManager) FindObjectOfType(typeof(GameManager));
+        GameManager = GameManager.Instance;
         Instance = this;
     }
 
     private void Start()
     {
         TotalTurnsAmount = GameManager.MaxTurns;
+        Debug.Log("TotalTurnsAmount  " + TotalTurnsAmount);
         SetTurnText("0");
 
         LeftChatMessagesCanvas.SetActive(false);
@@ -42,7 +43,7 @@ public class UIManager : MonoBehaviour
         {
             CurrentTurn += 1;
             ApplyTurn(CurrentTurn.ToString(), true);
-            // Debug.Log("apply turn "+CurrentTurn+" ui update");
+            Debug.Log("apply turn " + CurrentTurn + " ui update");
         }
     }
 
@@ -106,6 +107,7 @@ public class UIManager : MonoBehaviour
 
     public void OnLeftToggleChatButtonClicked()
     {
+        Debug.Log("lc pressed");
         LeftChatMessagesCanvas.SetActive(!LeftChatMessagesCanvas.activeSelf);
     }
 
