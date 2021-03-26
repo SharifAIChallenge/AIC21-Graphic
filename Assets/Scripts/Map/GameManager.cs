@@ -25,16 +25,16 @@ public class GameManager : MonoBehaviour
     public int haight;
     private List<GameObject> Temps = new List<GameObject>();
     private Hashtable AntsTable = new Hashtable();
-    [SerializeField]private TextMeshProUGUI team0_alive_workers;
-    [SerializeField]private TextMeshProUGUI team0_alive_soldiers;
-    [SerializeField]private TextMeshProUGUI team0_total_resource0;
-    [SerializeField]private TextMeshProUGUI team0_total_resource1;
-    [SerializeField]private TextMeshProUGUI team1_alive_workers;
-    [SerializeField]private TextMeshProUGUI team1_alive_soldiers;
-    [SerializeField]private TextMeshProUGUI team1_total_resource0;
-    [SerializeField]private TextMeshProUGUI team1_total_resource1;
-    [SerializeField]private TextMeshProUGUI team0_name;
-    [SerializeField]private TextMeshProUGUI team1_name;
+    [SerializeField] private TextMeshProUGUI team0_alive_workers;
+    [SerializeField] private TextMeshProUGUI team0_alive_soldiers;
+    [SerializeField] private TextMeshProUGUI team0_total_resource0;
+    [SerializeField] private TextMeshProUGUI team0_total_resource1;
+    [SerializeField] private TextMeshProUGUI team1_alive_workers;
+    [SerializeField] private TextMeshProUGUI team1_alive_soldiers;
+    [SerializeField] private TextMeshProUGUI team1_total_resource0;
+    [SerializeField] private TextMeshProUGUI team1_total_resource1;
+    [SerializeField] private TextMeshProUGUI team0_name;
+    [SerializeField] private TextMeshProUGUI team1_name;
     public int MaxTurns { get; private set; }
     private float baseTime;
     [HideInInspector] private bool playAnime;
@@ -108,12 +108,12 @@ public class GameManager : MonoBehaviour
         AntsTable.Clear();
         foreach (Ant ant in turn.Ants)
         {
-            int numbers = Mathf.NextPowerOfTwo(turn.CellAnts[ant.Row][ant.Col].Count);
+            int numbers = (int) Mathf.Pow(Mathf.Ceil(Mathf.Pow(turn.CellAnts[ant.Row][ant.Col].Count, 0.5f)), 2);
             int n = turn.CellAnts[ant.Row][ant.Col].IndexOf(ant.Id) + 1;
             GameObject antObject = Instantiate(antPrefab);
             AntScript antScript = antObject.GetComponent<AntScript>();
             antScript.SetMaxHealth(ant.Type == Ant.WORKER ? gameLog.Map.WorkerHealth : gameLog.Map.SoldierHealth);
-            antScript.Set(ant.Row, ant.Col, ant.Team, ant.Type, ant.Health, ant.Resource,ant.Id,numbers,n);
+            antScript.Set(ant.Row, ant.Col, ant.Team, ant.Type, ant.Health, ant.Resource, ant.Id, numbers, n);
             AntsTable.Add(ant.Id, antObject);
         }
     }
@@ -173,7 +173,7 @@ public class GameManager : MonoBehaviour
                 //new ants
                 Ant antObject = (Ant) antDE.Value;
                 GameObject ant;
-                int numbers = Mathf.NextPowerOfTwo(turn.CellAnts[antObject.Row][antObject.Col].Count);
+                int numbers = (int) Mathf.Pow(Mathf.Ceil(Mathf.Pow(turn.CellAnts[antObject.Row][antObject.Col].Count, 0.5f)), 2);
                 int n = turn.CellAnts[antObject.Row][antObject.Col].IndexOf(antObject.Id) + 1;
                 ant = Instantiate(antPrefab);
                 AntScript antScript = ant.GetComponent<AntScript>();
@@ -181,7 +181,7 @@ public class GameManager : MonoBehaviour
                     ? gameLog.Map.WorkerHealth
                     : gameLog.Map.SoldierHealth);
                 antScript.Set(antObject.Row, antObject.Col, antObject.Team, antObject.Type,
-                    antObject.Health, antObject.Resource,antObject.Id,numbers,n);
+                    antObject.Health, antObject.Resource, antObject.Id, numbers, n);
                 AntsTable.Add(antObject.Id, ant);
             }
 
@@ -201,7 +201,7 @@ public class GameManager : MonoBehaviour
 
 
             // Debug.Log("end phase1");
-            yield return new WaitForSecondsRealtime((baseTime / 2)*UIManager.Instance.Speed);
+            yield return new WaitForSecondsRealtime((baseTime / 2) * UIManager.Instance.Speed);
             if (playAnime)
             {
                 //move ants time
@@ -209,11 +209,11 @@ public class GameManager : MonoBehaviour
                 foreach (DictionaryEntry antDE in MovingAnts)
                 {
                     Ant ant = (Ant) antDE.Value;
-                    int numbers = Mathf.NextPowerOfTwo(turn.CellAnts[ant.Row][ant.Col].Count);
+                    int numbers = (int) Mathf.Pow(Mathf.Ceil(Mathf.Pow(turn.CellAnts[ant.Row][ant.Col].Count, 0.5f)), 2);
                     int n = turn.CellAnts[ant.Row][ant.Col].IndexOf(ant.Id) + 1;
                     GameObject antScript = (GameObject) antDE.Key;
                     StartCoroutine(antScript.GetComponent<AntScript>()
-                        .Go(ant.Row, ant.Col, ant.Health, ant.Resource, baseTime / 2,numbers,n));
+                        .Go(ant.Row, ant.Col, ant.Health, ant.Resource, baseTime / 2, numbers, n));
                 }
 
                 // Debug.Log("end phase2");

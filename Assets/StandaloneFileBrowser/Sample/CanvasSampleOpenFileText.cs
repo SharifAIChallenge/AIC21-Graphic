@@ -32,8 +32,11 @@ public class CanvasSampleOpenFileText : MonoBehaviour, IPointerDownHandler
     //
     public void OnPointerDown(PointerEventData eventData) { }
 
-    void Start() 
+    void Start()
     {
+        float a = Mathf.Ceil(Mathf.Pow(2, 0.5f)) +1;
+        Debug.Log(a);
+        Debug.Log(Mathf.Pow(a,2));
         var button = GetComponent<Button>();
         button.onClick.AddListener(OnClick);
     }
