@@ -178,5 +178,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9755f7a1657cab24483a52326105ed1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Poison: {fileID: 8829472896410337160, guid: 28457cf08a4171746b914f6a678aae91, type: 3}
   healthText: {fileID: 0}
   healthBar: {fileID: 0}

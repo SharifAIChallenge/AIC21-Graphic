@@ -173,7 +173,8 @@ public class GameManager : MonoBehaviour
                 //new ants
                 Ant antObject = (Ant) antDE.Value;
                 GameObject ant;
-                int numbers = (int) Mathf.Pow(Mathf.Ceil(Mathf.Pow(turn.CellAnts[antObject.Row][antObject.Col].Count, 0.5f)), 2);
+                int numbers =
+                    (int) Mathf.Pow(Mathf.Ceil(Mathf.Pow(turn.CellAnts[antObject.Row][antObject.Col].Count, 0.5f)), 2);
                 int n = turn.CellAnts[antObject.Row][antObject.Col].IndexOf(antObject.Id) + 1;
                 ant = Instantiate(antPrefab);
                 AntScript antScript = ant.GetComponent<AntScript>();
@@ -187,8 +188,22 @@ public class GameManager : MonoBehaviour
 
             foreach (Attack attack in turn.Attacks)
             {
-                GameObject attacker = (GameObject) AntsTable[attack.AttackerId];
-                attacker.GetComponent<AntScript>().Attack(attack.DstRow, attack.DstCol, baseTime / 2);
+                if (attack.AttackerId == -1)
+                {
+                    base1.GetComponent<BaseScript>().Attack(attack.SrcRow, attack.SrcCol, attack.DstRow, attack.DstCol,
+                        baseTime / 2);
+                }
+
+                if (attack.AttackerId == -2)
+                {
+                    base1.GetComponent<BaseScript>().Attack(attack.SrcRow, attack.SrcCol, attack.DstRow, attack.DstCol,
+                        baseTime / 2);
+                }
+                else
+                {
+                    GameObject attacker = (GameObject) AntsTable[attack.AttackerId];
+                    attacker.GetComponent<AntScript>().Attack(attack.DstRow, attack.DstCol, baseTime / 2);
+                }
             }
 
             foreach (DictionaryEntry antDE in cloneAntTable)
@@ -209,7 +224,8 @@ public class GameManager : MonoBehaviour
                 foreach (DictionaryEntry antDE in MovingAnts)
                 {
                     Ant ant = (Ant) antDE.Value;
-                    int numbers = (int) Mathf.Pow(Mathf.Ceil(Mathf.Pow(turn.CellAnts[ant.Row][ant.Col].Count, 0.5f)), 2);
+                    int numbers = (int) Mathf.Pow(Mathf.Ceil(Mathf.Pow(turn.CellAnts[ant.Row][ant.Col].Count, 0.5f)),
+                        2);
                     int n = turn.CellAnts[ant.Row][ant.Col].IndexOf(ant.Id) + 1;
                     GameObject antScript = (GameObject) antDE.Key;
                     StartCoroutine(antScript.GetComponent<AntScript>()

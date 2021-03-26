@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class BaseScript : MonoBehaviour
 {
+    [SerializeField] private GameObject Poison;
     public Text healthText;
     public HealthBar healthBar;
     private int maxHealth;
@@ -13,18 +14,28 @@ public class BaseScript : MonoBehaviour
 
     private void SetHealthBar()
     {
-        string tag =  "BaseHealth1";
-            Debug.Log(gameObject.name);
+        string tag = "BaseHealth1";
+        Debug.Log(gameObject.name);
         if (gameObject.name == "base2")
         {
             tag = "BaseHealth2";
         }
+
         healthBar = GameObject.FindWithTag(tag).GetComponent<HealthBar>();
+    }
+
+    public void Attack(int sx, int sy, int tar_x, int tar_y, float time)
+    {
+        GameObject poison = Instantiate(Poison);
+        poison.GetComponent<PoisonScript>().Fire(sx, sy, tar_x, tar_y, time);
+        //todo base animation attack
+        // mainAnimator.Play("Attack");
+        // LookTo(GameManager.Instance.ConvertPosition(x, y) - transform.position);
     }
 
     public void SetMaxHealth(int maxHealth)
     {
-        if(healthBar == null)
+        if (healthBar == null)
             SetHealthBar();
         this.maxHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
