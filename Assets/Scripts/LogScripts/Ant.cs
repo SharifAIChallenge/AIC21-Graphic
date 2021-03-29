@@ -1,8 +1,8 @@
 ﻿
 public class Ant
 {
-    public static readonly int WORKER = 0; 
-    public static readonly int SOLDIER = 1;
+    public static readonly int WORKER = 1; 
+    public static readonly int SOLDIER = 0;
     public int Id { get; }
     public int Team { get; }
     public int Type { get; }
