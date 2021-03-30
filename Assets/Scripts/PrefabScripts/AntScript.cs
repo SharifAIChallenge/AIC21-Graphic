@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -83,6 +84,8 @@ public class AntScript : MonoBehaviour
 
     public IEnumerator Go(int x, int y, int health, int recource, float time, int numbers, int n)
     {
+        int old_x = this.x;
+        int old_y = this.y;
         this.x = x;
         this.y = y;
         this.recource = recource;
@@ -90,12 +93,22 @@ public class AntScript : MonoBehaviour
         if (type == 1)
             SetResource(recource);
         SetHealth(health);
-        // yield return new WaitForSeconds(baseTime / 2);
-        yield return null;
         temp = GameManager.Instance.ConvertPosition(x, y) + handleMulty(numbers, n, GameManager.Instance.width);
-        mainAnimator.Play("Walk");
-        readTemp = true;
-        reachTime = time + Time.time;
+        if (math.abs(old_x - x) > 1 || math.abs(old_y - y) > 1)
+        {
+            //minor mode
+            mainAnimator.Play("Idle");
+            readTemp = false;
+            transform.position = temp;
+        }
+        else
+        {
+            mainAnimator.Play("Walk");
+            reachTime = time + Time.time;
+            readTemp = true;
+        }
+
+        yield return null;
     }
 
     private void Update()
@@ -134,9 +147,9 @@ public class AntScript : MonoBehaviour
 
     public IEnumerator die(float deadTime, float destroyTime)
     {
-        yield return new WaitForSecondsRealtime(deadTime*UIManager.Instance.Speed);
+        yield return new WaitForSecondsRealtime(deadTime * UIManager.Instance.Speed);
         mainAnimator.Play("Die");
-        yield return new WaitForSecondsRealtime(destroyTime*UIManager.Instance.Speed);
+        yield return new WaitForSecondsRealtime(destroyTime * UIManager.Instance.Speed);
         Destroy(gameObject);
     }
 

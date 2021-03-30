@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Object = System.Object;
 
 public class GameManager : MonoBehaviour
@@ -290,5 +291,19 @@ public class GameManager : MonoBehaviour
     public Vector3 ConvertPosition(int x, int y)
     {
         return new Vector3(x0 + x * width, y0 - y * haight, 1);
+    }
+
+    public void Close()
+    {
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+             Application.Quit();
+        #endif
+    }
+
+    public void Return()
+    {
+        SceneManager.LoadScene(0);
     }
 }

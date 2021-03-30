@@ -10,10 +10,6 @@ using UnityEngine.Networking;
 public class GameLogReader : MonoBehaviour
 {
     public static GameLogReader Instance;
-
-    public bool isWebGL;
-    public TextMeshProUGUI TextMeshProUgui;
-
     private void Awake()
     {
         Instance = this;
@@ -32,15 +28,17 @@ public class GameLogReader : MonoBehaviour
         GameConfigDTO gameConfigDTO = gameDTO.game_config;
         int height = gameConfigDTO.map_height;
         int width = gameConfigDTO.map_width;
-        int[][] cells = new int[height][];
-        for (int i = 0; i < height; i++)
+        int widthB = height;
+        int heightB = width;
+        int[][] cells = new int[heightB][];
+        for (int i = 0; i < heightB; i++)
         {
-            cells[i] = new int[width];
+            cells[i] = new int[widthB];
         }
 
         foreach (CellTypeDTO cellTypeDTO in gameConfigDTO.cells_type)
         {
-            cells[cellTypeDTO.row][cellTypeDTO.col] = cellTypeDTO.cell_type;
+            cells[cellTypeDTO.col][cellTypeDTO.row] = cellTypeDTO.cell_type;
         }
 
         Map map = new Map(cells, gameConfigDTO.base_health, gameConfigDTO.worker_health,
@@ -52,13 +50,13 @@ public class GameLogReader : MonoBehaviour
         {
             int base0Health = turnDTO.base0_health;
             int base1Health = turnDTO.base1_health;
-            int[][] resources0 = new int[height][];
-            int[][] resources1 = new int[height][];
-            for (int i = 0; i < height; i++)
+            int[][] resources0 = new int[heightB][];
+            int[][] resources1 = new int[heightB][];
+            for (int i = 0; i < heightB; i++)
             {
-                resources0[i] = new int[width];
-                resources1[i] = new int[width];
-                for (int j = 0; j < width; j++)
+                resources0[i] = new int[widthB];
+                resources1[i] = new int[widthB];
+                for (int j = 0; j < widthB; j++)
                 {
                     resources0[i][j] = 0;
                     resources1[i][j] = 0;
@@ -70,17 +68,17 @@ public class GameLogReader : MonoBehaviour
             {
                 if (cellDTO.resource_type == 0)
                 {
-                    resources0[cellDTO.row][cellDTO.col] = cellDTO.resource_value;
+                    resources0[cellDTO.col][cellDTO.row] = cellDTO.resource_value;
                 }
                 else if (cellDTO.resource_type == 1)
                 {
-                    resources1[cellDTO.row][cellDTO.col] = cellDTO.resource_value;
+                    resources1[cellDTO.col][cellDTO.row] = cellDTO.resource_value;
                 }
 
                 foreach (AntDTO antDTO in cellDTO.ants)
                 {
                     //NOTE: ants with same Id shouldn't have the same object here
-                    ants.Add(new Ant(antDTO.id, antDTO.team, antDTO.type, antDTO.resource, cellDTO.row, cellDTO.col,
+                    ants.Add(new Ant(antDTO.id, antDTO.team, antDTO.type, antDTO.resource, cellDTO.col, cellDTO.row,
                         antDTO.health));
                 }
             }
@@ -89,9 +87,9 @@ public class GameLogReader : MonoBehaviour
             for (int i = 0; i < turnDTO.attacks.Length; i++)
             {
                 AttackDTO attackDTO = turnDTO.attacks[i];
-                attacks[i] = new Attack(attackDTO.attacker_id, attackDTO.defender_id, attackDTO.src_row,
-                    attackDTO.src_col,
-                    attackDTO.dst_row, attackDTO.dst_col);
+                attacks[i] = new Attack(attackDTO.attacker_id, attackDTO.defender_id, attackDTO.src_col,
+                    attackDTO.src_row,
+                    attackDTO.dst_col, attackDTO.dst_row);
             }
 
             int len = turnDTO.important_chat_box_0.Length;
