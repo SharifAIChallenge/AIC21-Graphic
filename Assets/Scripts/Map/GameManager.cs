@@ -11,13 +11,13 @@ public class GameManager : MonoBehaviour
     public GameObject InGame;
     public GameObject GameLogBrowser;
 
-    public GameObject antPrefab;
-    public GameObject cell_empty;
-    public GameObject cell_wall;
-    public GameObject base1;
-    public GameObject base2;
-    public GameObject rec1;
-    public GameObject rec2;
+    [SerializeField] private GameObject antPrefab;
+    [SerializeField] private GameObject cell_empty;
+    [SerializeField] private GameObject cell_wall;
+    [SerializeField] private GameObject base1;
+    [SerializeField] private GameObject base2;
+    [SerializeField] private GameObject rec1;
+    [SerializeField] private GameObject rec2;
     private GameLog gameLog;
     private int currTurn;
     public int x0;
@@ -36,6 +36,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI team1_total_resource1;
     [SerializeField] private TextMeshProUGUI team0_name;
     [SerializeField] private TextMeshProUGUI team1_name;
+    [SerializeField] private GameObject RightStats;
+    [SerializeField] private GameObject LeftStats;
     public int MaxTurns { get; private set; }
     private float baseTime;
     [HideInInspector] private bool playAnime;
@@ -306,4 +308,14 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
+
+    public void RightStatsClicked()
+    {
+        RightStats.SetActive(!RightStats.activeSelf);
+    }
+    public void LeftStatsClicked()
+    {
+        LeftStats.SetActive(!LeftStats.activeSelf);
+    }
+    
 }
