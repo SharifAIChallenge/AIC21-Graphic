@@ -10,7 +10,8 @@ public class GameManager : MonoBehaviour
 {
     public GameObject InGame;
     public GameObject GameLogBrowser;
-
+    [SerializeField] private GameObject winnerPanel;
+    [SerializeField] private TextMeshProUGUI winnerText;
     [SerializeField] private GameObject antPrefab;
     [SerializeField] private GameObject cell_empty;
     [SerializeField] private GameObject cell_wall;
@@ -53,7 +54,8 @@ public class GameManager : MonoBehaviour
     {
         GameLogBrowser.SetActive(false);
         InGame.SetActive(true);
-
+        
+        winnerPanel.SetActive(false);
         baseTime = UIManager.Instance.BaseTime;
         this.gameLog = gameLog;
         base1.GetComponent<BaseScript>().SetMaxHealth(gameLog.Map.BaseHealth);
@@ -61,6 +63,14 @@ public class GameManager : MonoBehaviour
         ShowMap();
         FindObjectOfType<MoveCamera>().setMaid(gameLog.Map.cells.Length * width, gameLog.Map.cells[0].Length * haight);
         MaxTurns = gameLog.Turns.Length;
+        if (gameLog.Map.WinnerTeam==0)
+        {
+            winnerText.text = gameLog.Map.Team0Name;
+        }
+        else
+        {
+            winnerText.text = gameLog.Map.Team1Name;
+        }
     }
 
     public void ApplyLog(int turn, bool isAnim)
@@ -69,19 +79,19 @@ public class GameManager : MonoBehaviour
         if (currTurn == turn - 1 && isAnim)
         {
             playAnime = true;
-            StartCoroutine(ApplyTurnAnim(gameLog.Turns[turn - 1]));
+            StartCoroutine(ApplyTurnAnim(gameLog.Turns[turn - 1],turn == MaxTurns));
         }
         else
         {
             playAnime = false;
-            ApplyTurnUnAnim(gameLog.Turns[turn - 1]);
+            ApplyTurnUnAnim(gameLog.Turns[turn - 1],turn == MaxTurns);
         }
 
         currTurn = turn;
     }
 
 
-    private void ApplyTurnUnAnim(Turn turn)
+    private void ApplyTurnUnAnim(Turn turn, bool lastTurn)
     {
         team0_alive_workers.text = turn.team0_alive_workers.ToString();
         team0_alive_soldiers.text = turn.team0_alive_soldiers.ToString();
@@ -119,9 +129,18 @@ public class GameManager : MonoBehaviour
             antScript.Set(ant.Row, ant.Col, ant.Team, ant.Type, ant.Health, ant.Resource, ant.Id, numbers, n);
             AntsTable.Add(ant.Id, antObject);
         }
+
+        if (lastTurn)
+        {
+            winnerPanel.SetActive(true);
+        }
+        else
+        {
+            winnerPanel.SetActive(false);
+        }
     }
 
-    private IEnumerator ApplyTurnAnim(Turn turn)
+    private IEnumerator ApplyTurnAnim(Turn turn,bool lastTurn)
     {
         team0_alive_workers.text = turn.team0_alive_workers.ToString();
         team0_alive_soldiers.text = turn.team0_alive_soldiers.ToString();
@@ -220,6 +239,14 @@ public class GameManager : MonoBehaviour
 
             // Debug.Log("end phase1");
             yield return new WaitForSecondsRealtime((baseTime / 2) * UIManager.Instance.Speed);
+            if (lastTurn)
+            {
+                winnerPanel.SetActive(true);
+            }
+            else
+            {
+                winnerPanel.SetActive(false);
+            }
             if (playAnime)
             {
                 //move ants time

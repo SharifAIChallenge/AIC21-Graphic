@@ -42,7 +42,7 @@ public class GameLogReader : MonoBehaviour
         }
 
         Map map = new Map(cells, gameConfigDTO.base_health, gameConfigDTO.worker_health,
-            gameConfigDTO.soldier_health, gameConfigDTO.team0_name, gameConfigDTO.team1_name);
+            gameConfigDTO.soldier_health, gameConfigDTO.team0_name, gameConfigDTO.team1_name,gameConfigDTO.winner);
 
         //making turns
         Turn[] turns = new Turn[gameDTO.turns.Length];

@@ -9,4 +9,5 @@ public class GameConfigDTO
     public CellTypeDTO[] cells_type;
     public string team0_name;
     public string team1_name;
+    public int winner;
 }
