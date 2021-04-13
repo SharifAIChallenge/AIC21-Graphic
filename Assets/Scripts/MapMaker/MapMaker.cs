@@ -12,8 +12,9 @@ public class MapMaker : MonoBehaviour
     [SerializeField] private InputField widthInput;
     [SerializeField] private InputField heightInput;
     [SerializeField] private Canvas canvas;
-     private int width;
-     private int height;
+    [SerializeField] private InputField path;
+    private int width;
+    private int height;
     [SerializeField] private GameObject cell;
     [SerializeField] private GameObject res1Prefab;
     [SerializeField] private GameObject res2Prefab;
@@ -109,7 +110,6 @@ public class MapMaker : MonoBehaviour
         // gameConfigMake.cells_type = cellTypeMake;
         // string json = JsonUtility.ToJson(gameConfigMake);
         // Debug.Log(json);
-        
     }
 
     public void changeCell(int row, int col, int type)
@@ -128,12 +128,78 @@ public class MapMaker : MonoBehaviour
         }
         catch (Exception e)
         {
+            // ignored
         }
 
-        res1[row][col] = res1Amount;
-        res2[row][col] = res2Amount;
+        res1[col][row] = res1Amount;
+        res2[col][row] = res2Amount;
         cell.GetComponent<CellTypeMake>().res1Text.text = res1Amount.ToString();
         cell.GetComponent<CellTypeMake>().res2Text.text = res2Amount.ToString();
+    }
+
+    public void load()
+    {
+        string json;
+        if(path.text == "")
+            json = File.ReadAllText("map1.json");
+        else
+            json = File.ReadAllText(path.text);
+        GameConfigMake gameConfigMake = JsonUtility.FromJson<GameConfigMake>(json);
+        CellTypeMakeJson[] cellTypeMake = gameConfigMake.cells_type;
+        height = 0;
+        foreach (CellTypeMakeJson cell in cellTypeMake)
+        {
+            if (cell.row + 1 > height)
+                height = cell.row + 1;
+        }
+
+        width = 0;
+        foreach (CellTypeMakeJson cell in cellTypeMake)
+        {
+            if (cell.col + 1 > width)
+                width = cell.col + 1;
+        }
+
+        foreach (var VARIABLE in Cells)
+        {
+            foreach (GameObject gameObject in VARIABLE)
+            {
+                Destroy(gameObject);
+            }
+        }
+
+        map = new int[height][];
+        res1 = new int[height][];
+        res2 = new int[height][];
+        Cells = new GameObject[height][];
+        for (int i = 0; i < height; i++)
+        {
+            map[i] = new int[width];
+            res1[i] = new int[width];
+            res2[i] = new int[width];
+            Cells[i] = new GameObject[width];
+            for (int j = 0; j < width; j++)
+            {
+                CellTypeMakeJson ctm = null;
+                foreach (CellTypeMakeJson ce in cellTypeMake)
+                {
+                    if (ce.row == i && ce.col == j)
+                    {
+                        ctm = ce;
+                        break;
+                    }
+                }
+
+                map[i][j] = ctm.cell_type;
+                res1[i][j] = ctm.rec1;
+                res2[i][j] = ctm.rec2;
+                GameObject cellObj = Instantiate(cell);
+                cellObj.GetComponent<CellTypeMake>().SetCellTypeMake(j, i, ctm.cell_type, ctm.rec1, ctm.rec2);
+                cellObj.transform.SetParent(canvas.transform);
+                cellObj.transform.position = new Vector3(j * 4, -i * 4);
+                Cells[i][j] = cellObj;
+            }
+        }
     }
 
     public void ExportMap()
@@ -143,7 +209,7 @@ public class MapMaker : MonoBehaviour
         {
             for (int j = 0; j < width; j++)
             {
-                cellTypeMake[i * width + j] = new CellTypeMakeJson(i,j, map[i][j], res1[i][j], res2[i][j]);
+                cellTypeMake[i * width + j] = new CellTypeMakeJson(i, j, map[i][j], res1[i][j], res2[i][j]);
             }
         }
 

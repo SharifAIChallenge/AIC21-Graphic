@@ -1,7 +1,4 @@
-﻿// Credit to damien_oconnell from http://forum.unity3d.com/threads/39513-Click-drag-camera-movement
-// for using the mouse displacement for calculating the amount of camera movement and panning code.
-
-using System;
+﻿using System;
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UIElements;
@@ -15,6 +12,7 @@ public class MoveCamera : MonoBehaviour
     [SerializeField] private Camera myCamera;
     private float lastZoom;
     private bool IsSet = false;
+    [SerializeField] private bool crossCameraSize;
 
     public void setMaid(int maxX, int maxY)
     {
@@ -39,7 +37,7 @@ public class MoveCamera : MonoBehaviour
 
         if (myCamera.orthographicSize < 0)
         {
-            myCamera.orthographicSize = 0;
+            myCamera.orthographicSize = 0.1f;
         }
 
         Vector3 pos;
@@ -48,25 +46,28 @@ public class MoveCamera : MonoBehaviour
         {
             pos = Vector3.up;
             move = new Vector3(-pos.x * ArrowMoveSpeed * Time.deltaTime, -pos.y * ArrowMoveSpeed * Time.deltaTime, 0);
-            transform.Translate(move, Space.World);
+            MovingCamera(move);
         }
+
         if (Input.GetAxis("Vertical") > 0)
         {
             pos = Vector3.down;
             move = new Vector3(-pos.x * ArrowMoveSpeed * Time.deltaTime, -pos.y * ArrowMoveSpeed * Time.deltaTime, 0);
-            transform.Translate(move, Space.World);
+            MovingCamera(move);
         }
+
         if (Input.GetAxis("Horizontal") < 0)
         {
             pos = Vector3.right;
             move = new Vector3(-pos.x * ArrowMoveSpeed * Time.deltaTime, -pos.y * ArrowMoveSpeed * Time.deltaTime, 0);
-            transform.Translate(move, Space.World);
+            MovingCamera(move);
         }
+
         if (Input.GetAxis("Horizontal") > 0)
         {
             pos = Vector3.left;
             move = new Vector3(-pos.x * ArrowMoveSpeed * Time.deltaTime, -pos.y * ArrowMoveSpeed * Time.deltaTime, 0);
-            transform.Translate(move, Space.World);
+            MovingCamera(move);
         }
 
         if (Input.GetMouseButtonDown(0))
@@ -80,7 +81,19 @@ public class MoveCamera : MonoBehaviour
         pos = Camera.main.ScreenToViewportPoint(Input.mousePosition - dragOrigin);
         move = new Vector3(-pos.x * dragSpeed * Time.deltaTime, -pos.y * dragSpeed * Time.deltaTime, 0);
 
-        transform.Translate(move, Space.World);
+        MovingCamera(move);
+    }
+
+    private void MovingCamera(Vector3 move)
+    {
+        if (crossCameraSize)
+        {
+            transform.Translate(move * myCamera.orthographicSize, Space.World);
+        }
+        else
+        {
+            transform.Translate(move, Space.World);
+        }
     }
 
     public void onScrool()
