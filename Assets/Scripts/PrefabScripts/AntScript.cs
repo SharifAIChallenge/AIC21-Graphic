@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -97,7 +96,7 @@ public class AntScript : MonoBehaviour
             SetResource(recource);
         SetHealth(health);
         temp = GameManager.Instance.ConvertPosition(x, y) + handleMulty(numbers, n, GameManager.Instance.width);
-        if (math.abs(old_x - x) > 1 || math.abs(old_y - y) > 1)
+        if (Math.Abs(old_x - x) > 1 || Math.Abs(old_y - y) > 1)
         {
             //minor mode
             mainAnimator.Play("Idle");

@@ -74,8 +74,6 @@ public class GameManager : MonoBehaviour
         this.gameLog = gameLog;
         base1.GetComponent<BaseScript>().SetMaxHealth(gameLog.Map.BaseHealth);
         base2.GetComponent<BaseScript>().SetMaxHealth(gameLog.Map.BaseHealth);
-        base1 = InstansiateCell(base1, 0, 0);
-        base2 = InstansiateCell(base2, 0, 0);
         ShowMap();
         FindObjectOfType<MoveCamera>().setMaid(gameLog.Map.cells.Length * width, gameLog.Map.cells[0].Length * haight);
         MaxTurns = gameLog.Turns.Length;
@@ -344,26 +342,10 @@ public class GameManager : MonoBehaviour
                         Temps.Add(InstansiateCell(cell_mud, i, j));
                         break;
                     case 0:
-                        if (base1 == null)
-                        {
-                            base1 = InstansiateCell(base1, i, j);
-                        }
-                        else
-                        {
-                            base1.transform.position = ConvertPosition(i, j);
-                        }
-
+                        base1 = InstansiateCell(base1, i, j);
                         break;
                     case 1:
-                        if (base2 == null)
-                        {
-                            base2 = InstansiateCell(base2, i, j);
-                        }
-                        else
-                        {
-                            base2.transform.position = ConvertPosition(i, j);
-                        }
-
+                        base2 = InstansiateCell(base2, i, j);
                         break;
                 }
             }
