@@ -41,6 +41,24 @@ public class CellTypeMake : MonoBehaviour
         this.rec1 = rec1;
         this.rec2 = rec2;
         transform.position = new Vector3(col * 2, -row * 2, 1);
+        switch (cell_type)
+        {
+            case 0:
+                Sprite.sprite = base1;
+                break;
+            case 1:
+                Sprite.sprite = base2;
+                break;
+            case 2:
+                Sprite.sprite = empty;
+                break;
+            case 3:
+                Sprite.sprite = wall;
+                break;
+        }
+
+        res1Text.text = rec1.ToString();
+        res2Text.text = rec2.ToString();
     }
 
     public void OnClick()

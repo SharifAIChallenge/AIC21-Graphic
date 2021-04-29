@@ -24,6 +24,8 @@ public class MoveCamera : MonoBehaviour
 
     void Update()
     {
+        float deltatime;
+        deltatime = Time.fixedDeltaTime;
         lastZoom = myCamera.orthographicSize;
         if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
@@ -45,28 +47,28 @@ public class MoveCamera : MonoBehaviour
         if (Input.GetAxis("Vertical") < 0)
         {
             pos = Vector3.up;
-            move = new Vector3(-pos.x * ArrowMoveSpeed * Time.deltaTime, -pos.y * ArrowMoveSpeed * Time.deltaTime, 0);
+            move = new Vector3(-pos.x * ArrowMoveSpeed * deltatime, -pos.y * ArrowMoveSpeed * deltatime, 0);
             MovingCamera(move);
         }
 
         if (Input.GetAxis("Vertical") > 0)
         {
             pos = Vector3.down;
-            move = new Vector3(-pos.x * ArrowMoveSpeed * Time.deltaTime, -pos.y * ArrowMoveSpeed * Time.deltaTime, 0);
+            move = new Vector3(-pos.x * ArrowMoveSpeed * deltatime, -pos.y * ArrowMoveSpeed * deltatime, 0);
             MovingCamera(move);
         }
 
         if (Input.GetAxis("Horizontal") < 0)
         {
             pos = Vector3.right;
-            move = new Vector3(-pos.x * ArrowMoveSpeed * Time.deltaTime, -pos.y * ArrowMoveSpeed * Time.deltaTime, 0);
+            move = new Vector3(-pos.x * ArrowMoveSpeed * deltatime, -pos.y * ArrowMoveSpeed * deltatime, 0);
             MovingCamera(move);
         }
 
         if (Input.GetAxis("Horizontal") > 0)
         {
             pos = Vector3.left;
-            move = new Vector3(-pos.x * ArrowMoveSpeed * Time.deltaTime, -pos.y * ArrowMoveSpeed * Time.deltaTime, 0);
+            move = new Vector3(-pos.x * ArrowMoveSpeed * deltatime, -pos.y * ArrowMoveSpeed * deltatime, 0);
             MovingCamera(move);
         }
 
@@ -79,7 +81,7 @@ public class MoveCamera : MonoBehaviour
         if (!Input.GetMouseButton(0)) return;
 
         pos = Camera.main.ScreenToViewportPoint(Input.mousePosition - dragOrigin);
-        move = new Vector3(-pos.x * dragSpeed * Time.deltaTime, -pos.y * dragSpeed * Time.deltaTime, 0);
+        move = new Vector3(-pos.x * dragSpeed * deltatime, -pos.y * dragSpeed * deltatime, 0);
 
         MovingCamera(move);
     }
@@ -88,11 +90,12 @@ public class MoveCamera : MonoBehaviour
     {
         if (crossCameraSize)
         {
-            transform.Translate(move * myCamera.orthographicSize, Space.World);
+            // transform.Translate(move * myCamera.orthographicSize, Space.World);
+            transform.position += move;
         }
         else
         {
-            transform.Translate(move, Space.World);
+            transform.position += move;
         }
     }
 

@@ -24,4 +24,10 @@ public class CellTypeMakeJson
         this.rec1 = rec1;
         this.rec2 = rec2;
     }
+
+    public override bool Equals(object obj)
+    {
+        CellTypeMakeJson ce = (CellTypeMakeJson) obj;
+        return this.row == ce.row && this.col == ce.col;
+    }
 }

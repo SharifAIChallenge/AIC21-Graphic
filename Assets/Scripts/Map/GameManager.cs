@@ -4,22 +4,32 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Object = System.Object;
 
 public class GameManager : MonoBehaviour
 {
     public GameObject InGame;
     public GameObject GameLogBrowser;
+    private int shift_x;
+    private int shift_y;
+    [SerializeField] private GameObject ruler;
+    private bool isRuler = true;
+    private bool skipAnim = false;
     [SerializeField] private GameObject winnerPanel;
     [SerializeField] private TextMeshProUGUI winnerText;
     [SerializeField] private GameObject antPrefab;
     [SerializeField] private GameObject cell_empty;
     [SerializeField] private GameObject cell_wall;
+    [SerializeField] private GameObject cell_glue;
+    [SerializeField] private GameObject cell_mud;
     [SerializeField] private GameObject base1;
     [SerializeField] private GameObject base2;
     [SerializeField] private GameObject rec1;
     [SerializeField] private GameObject rec2;
     private GameLog gameLog;
+    private int mapWidth;
+    private int mapHeight;
     private int currTurn;
     public int x0;
     public int y0;
@@ -47,23 +57,29 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        Application.targetFrameRate = 50;
         Instance = this;
     }
 
     public void StartGameManager(GameLog gameLog)
     {
+        shift_x = gameLog.Map.ShiftX;
+        shift_y = gameLog.Map.ShiftY;
         GameLogBrowser.SetActive(false);
         InGame.SetActive(true);
-        
+        mapHeight = gameLog.Map.cells.Length;
+        mapWidth = gameLog.Map.cells[0].Length;
         winnerPanel.SetActive(false);
         baseTime = UIManager.Instance.BaseTime;
         this.gameLog = gameLog;
         base1.GetComponent<BaseScript>().SetMaxHealth(gameLog.Map.BaseHealth);
         base2.GetComponent<BaseScript>().SetMaxHealth(gameLog.Map.BaseHealth);
+        base1 = InstansiateCell(base1, 0, 0);
+        base2 = InstansiateCell(base2, 0, 0);
         ShowMap();
         FindObjectOfType<MoveCamera>().setMaid(gameLog.Map.cells.Length * width, gameLog.Map.cells[0].Length * haight);
         MaxTurns = gameLog.Turns.Length;
-        if (gameLog.Map.WinnerTeam==0)
+        if (gameLog.Map.WinnerTeam == 0)
         {
             winnerText.text = gameLog.Map.Team0Name;
         }
@@ -78,13 +94,21 @@ public class GameManager : MonoBehaviour
         Debug.Log(currTurn + "    " + turn);
         if (currTurn == turn - 1 && isAnim)
         {
-            playAnime = true;
-            StartCoroutine(ApplyTurnAnim(gameLog.Turns[turn - 1],turn == MaxTurns));
+            if (skipAnim)
+            {
+                ApplyTurnUnAnim(gameLog.Turns[turn - 1], turn == MaxTurns);
+                skipAnim = false;
+            }
+            else
+            {
+                playAnime = true;
+                StartCoroutine(ApplyTurnAnim(gameLog.Turns[turn - 1], turn == MaxTurns));
+            }
         }
         else
         {
             playAnime = false;
-            ApplyTurnUnAnim(gameLog.Turns[turn - 1],turn == MaxTurns);
+            ApplyTurnUnAnim(gameLog.Turns[turn - 1], turn == MaxTurns);
         }
 
         currTurn = turn;
@@ -108,6 +132,8 @@ public class GameManager : MonoBehaviour
         {
             Destroy(temp);
         }
+
+        ShowMap();
 
         base1.GetComponent<BaseScript>().setHealth(turn.Base0Health);
         base2.GetComponent<BaseScript>().setHealth(turn.Base1Health);
@@ -140,7 +166,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private IEnumerator ApplyTurnAnim(Turn turn,bool lastTurn)
+    private IEnumerator ApplyTurnAnim(Turn turn, bool lastTurn)
     {
         team0_alive_workers.text = turn.team0_alive_workers.ToString();
         team0_alive_soldiers.text = turn.team0_alive_soldiers.ToString();
@@ -159,10 +185,10 @@ public class GameManager : MonoBehaviour
             Destroy(temp);
         }
 
+        ShowMap();
+
         base1.GetComponent<BaseScript>().setHealth(turn.Base0Health);
         base2.GetComponent<BaseScript>().setHealth(turn.Base1Health);
-        ApplyResources(turn.Resources0, rec1);
-        ApplyResources(turn.Resources1, rec2);
         Hashtable cloneAntTable = (Hashtable) AntsTable.Clone();
         Hashtable MovingAnts = new Hashtable();
         Hashtable NewAnts = new Hashtable();
@@ -213,18 +239,25 @@ public class GameManager : MonoBehaviour
                 if (attack.AttackerId == -1)
                 {
                     base1.GetComponent<BaseScript>().Attack(attack.SrcRow, attack.SrcCol, attack.DstRow, attack.DstCol,
-                        baseTime / 2);
+                        baseTime / 3);
                 }
 
                 if (attack.AttackerId == -2)
                 {
-                    base1.GetComponent<BaseScript>().Attack(attack.SrcRow, attack.SrcCol, attack.DstRow, attack.DstCol,
-                        baseTime / 2);
+                    base2.GetComponent<BaseScript>().Attack(attack.SrcRow, attack.SrcCol, attack.DstRow, attack.DstCol,
+                        baseTime / 3);
                 }
                 else
                 {
                     GameObject attacker = (GameObject) AntsTable[attack.AttackerId];
-                    attacker.GetComponent<AntScript>().Attack(attack.DstRow, attack.DstCol, baseTime / 2);
+                    try
+                    {
+                        attacker.GetComponent<AntScript>().Attack(attack.DstRow, attack.DstCol, baseTime / 3);
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.Log(attack.AttackerId + " " + attack.DefenderId);
+                    }
                 }
             }
 
@@ -236,9 +269,12 @@ public class GameManager : MonoBehaviour
                 StartCoroutine(antScript.GetComponent<AntScript>().die(baseTime / 4, baseTime / 4));
             }
 
-
+            
             // Debug.Log("end phase1");
-            yield return new WaitForSecondsRealtime((baseTime / 2) * UIManager.Instance.Speed);
+            ApplyResources(turn.Resources0, rec1);
+            ApplyResources(turn.Resources1, rec2);
+            yield return new WaitForSecondsRealtime((baseTime / 3) * UIManager.Instance.Speed);
+            // yield return null;
             if (lastTurn)
             {
                 winnerPanel.SetActive(true);
@@ -247,8 +283,10 @@ public class GameManager : MonoBehaviour
             {
                 winnerPanel.SetActive(false);
             }
+
             if (playAnime)
             {
+                Debug.Log("move ant");
                 //move ants time
                 // Debug.Log("start phase2");
                 foreach (DictionaryEntry antDE in MovingAnts)
@@ -259,7 +297,7 @@ public class GameManager : MonoBehaviour
                     int n = turn.CellAnts[ant.Row][ant.Col].IndexOf(ant.Id) + 1;
                     GameObject antScript = (GameObject) antDE.Key;
                     StartCoroutine(antScript.GetComponent<AntScript>()
-                        .Go(ant.Row, ant.Col, ant.Health, ant.Resource, baseTime / 2, numbers, n));
+                        .Go(ant.Row, ant.Col, ant.Health, ant.Resource, baseTime*2 / 3, numbers, n));
                 }
 
                 // Debug.Log("end phase2");
@@ -294,16 +332,38 @@ public class GameManager : MonoBehaviour
                 switch (gameLog.Map.cells[i][j])
                 {
                     case 2:
-                        InstansiateCell(cell_empty, i, j);
+                        Temps.Add(InstansiateCell(cell_empty, i, j));
                         break;
                     case 3:
-                        InstansiateCell(cell_wall, i, j);
+                        Temps.Add(InstansiateCell(cell_wall, i, j));
+                        break;
+                    case 4:
+                        Temps.Add(InstansiateCell(cell_glue, i, j));
+                        break;
+                    case 5:
+                        Temps.Add(InstansiateCell(cell_mud, i, j));
                         break;
                     case 0:
-                        base1 = InstansiateCell(base1, i, j);
+                        if (base1 == null)
+                        {
+                            base1 = InstansiateCell(base1, i, j);
+                        }
+                        else
+                        {
+                            base1.transform.position = ConvertPosition(i, j);
+                        }
+
                         break;
                     case 1:
-                        base2 = InstansiateCell(base2, i, j);
+                        if (base2 == null)
+                        {
+                            base2 = InstansiateCell(base2, i, j);
+                        }
+                        else
+                        {
+                            base2.transform.position = ConvertPosition(i, j);
+                        }
+
                         break;
                 }
             }
@@ -319,16 +379,23 @@ public class GameManager : MonoBehaviour
 
     public Vector3 ConvertPosition(int x, int y)
     {
-        return new Vector3(x0 + x * width, y0 - y * haight, 1);
+        if (isRuler)
+        {
+            return new Vector3(x0 + ((x + shift_x) % mapHeight) * width, y0 - ((y + shift_y) % mapWidth) * haight, 1);
+        }
+        else
+        {
+            return new Vector3(x0 + ((x) % mapHeight) * width, y0 - ((y) % mapWidth) * haight, 1);
+        }
     }
 
     public void Close()
     {
-        #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-        #else
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
              Application.Quit();
-        #endif
+#endif
     }
 
     public void Return()
@@ -340,9 +407,27 @@ public class GameManager : MonoBehaviour
     {
         RightStats.SetActive(!RightStats.activeSelf);
     }
+
     public void LeftStatsClicked()
     {
         LeftStats.SetActive(!LeftStats.activeSelf);
     }
-    
+
+    public void ApplyRuler()
+    {
+        if (isRuler)
+        {
+            skipAnim = true;
+            isRuler = false;
+            var color = ruler.GetComponent<Image>().color;
+            ruler.GetComponent<Image>().color = new Color(color.r,color.g,color.b,50);
+        }
+        else
+        {
+            skipAnim = true;
+            isRuler = true;
+            var color = ruler.GetComponent<Image>().color;
+            color.a = 200;
+        }
+    }
 }

@@ -28,9 +28,6 @@ public class BaseScript : MonoBehaviour
     {
         GameObject poison = Instantiate(Poison);
         poison.GetComponent<PoisonScript>().Fire(sx, sy, tar_x, tar_y, time);
-        //todo base animation attack
-        // mainAnimator.Play("Attack");
-        // LookTo(GameManager.Instance.ConvertPosition(x, y) - transform.position);
     }
 
     public void SetMaxHealth(int maxHealth)

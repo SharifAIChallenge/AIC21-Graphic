@@ -14,7 +14,6 @@ public class ChatManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI TextPrefab;
     [SerializeField] private VerticalLayoutGroup PanelRight;
     [SerializeField] private VerticalLayoutGroup PanelLeft;
-
     private void Awake()
     {
         Instance = this;
@@ -70,7 +69,7 @@ public class ChatManager : MonoBehaviour
         int trivialMessagesCount = trivialMessages.Length;
         int total = importantMessagesCount + trivialMessagesCount;
         int i;
-        Panel.spacing = total;
+        // Panel.spacing = total;
         RectTransform rectTransform = Panel.gameObject.GetComponent<RectTransform>();
         rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, total * MessageHeight);
         rectTransform.Translate(0,-100,0);

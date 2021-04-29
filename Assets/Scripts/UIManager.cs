@@ -95,19 +95,17 @@ public class UIManager : MonoBehaviour
     public void OnChangeSpeedButtonClicked(float factor)
     {
         Speed *= factor;
-        if (Speed > 4)
-            Speed = 4;
+        if (Speed > 2)
+            Speed = 2;
         if (Speed < 0.25)
             Speed = (float) 0.25;
         if (Time.timeScale > 0)
             Time.timeScale = Speed;
         SpeedText.text = Speed.ToString("F2");
-        //call function from GameManager
     }
 
     public void OnLeftToggleChatButtonClicked()
     {
-        Debug.Log("lc pressed");
         LeftChatMessagesCanvas.SetActive(!LeftChatMessagesCanvas.activeSelf);
     }
 

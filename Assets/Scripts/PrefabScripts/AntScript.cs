@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class AntScript : MonoBehaviour
 {
+    [SerializeField] private float MaxDis;
     [SerializeField] private float fighterScaleCorrection;
     [SerializeField] private Color redFighterColorCorrection;
     [SerializeField] private Sprite resource1;
@@ -36,7 +37,9 @@ public class AntScript : MonoBehaviour
     private float reachTime;
     private Animator mainAnimator;
     private Vector3 baseScale;
-
+    [SerializeField] private int turnNumber;
+    [SerializeField] private int turnOrder;
+    private int turnI = 0;
 
     private void Awake()
     {
@@ -111,7 +114,7 @@ public class AntScript : MonoBehaviour
         yield return null;
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if (readTemp)
         {
@@ -123,8 +126,24 @@ public class AntScript : MonoBehaviour
             }
             else
             {
+                if (reachTime - Time.time < 0 )
+                {
+                    Debug.Log("error "+id+" "+reachTime+" "+Time.time);
+                }
+
+                float deltaTime = reachTime - Time.time;
+                if (deltaTime < 0)
+                {
+                    deltaTime = 0.0001f;
+                }
+                float maxDistanceDelta;
+                maxDistanceDelta = (d / deltaTime) * Time.deltaTime * turnOrder/turnNumber;
+                Debug.Log("id: " + id + "current: " + transform.position + " goal: " + temp + " delta " + d +
+                          " max dis: " + maxDistanceDelta);
+                maxDistanceDelta = Mathf.Min(MaxDis, maxDistanceDelta);
+                Debug.Log("id: "+id+" max dis: "+maxDistanceDelta);
                 transform.position = Vector3.MoveTowards(transform.position, temp,
-                    (d / (reachTime - Time.time)) * Time.deltaTime);
+                    maxDistanceDelta);
                 Vector3 dir = temp - transform.position;
                 LookTo(dir);
             }

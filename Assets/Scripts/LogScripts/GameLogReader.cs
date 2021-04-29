@@ -3,17 +3,66 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System.Runtime.InteropServices;
 using TMPro;
+using UnityEngine.EventSystems;
 using UnityEngine.Networking;
 
 
 public class GameLogReader : MonoBehaviour
 {
+    private string json;
+
+    [DllImport("__Internal")]
+    private static extern void UploadFile(string gameObjectName, string methodName, string filter, bool multiple);
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        UploadFile(gameObject.name, "OnFileUpload", ".txt", false);
+        Debug.Log("u");
+    }
+
+    // Called from browser
+    public void OnFileUpload(string url)
+    {
+        Debug.Log(url);
+
+        StartCoroutine(OutputRoutine(url));
+    }
+
+    private IEnumerator OutputRoutine(string url)
+    {
+        var loader = new WWW(url);
+        Debug.Log(url);
+        Debug.Log(Application.dataPath);
+        yield return loader;
+        GameLogReader.Instance.MakeLog(loader.text);
+    }
+
     public static GameLogReader Instance;
+
     private void Awake()
     {
         Instance = this;
+        // StartCoroutine(OutputRoutine(new System.Uri( Application.dataPath+"/log1.json").AbsoluteUri));
+        // ReadLog("/log1.json");
     }
+
+    public void ReadLog(string filePath)
+    {
+        StartCoroutine(OutputRoutine(new System.Uri(Application.dataPath + "/" + filePath).AbsoluteUri));
+    }
+
+    public void MakePartLog(string partJson)
+    {
+        json += partJson;
+    }
+
+    public void MakeLogStart()
+    {
+        MakeLog(json);
+    }
+
 
     public GameLog GameLog { get; private set; }
 
@@ -42,7 +91,8 @@ public class GameLogReader : MonoBehaviour
         }
 
         Map map = new Map(cells, gameConfigDTO.base_health, gameConfigDTO.worker_health,
-            gameConfigDTO.soldier_health, gameConfigDTO.team0_name, gameConfigDTO.team1_name,gameConfigDTO.winner);
+            gameConfigDTO.soldier_health, gameConfigDTO.team0_name, gameConfigDTO.team1_name, gameConfigDTO.winner,
+            gameConfigDTO.shift_x, gameConfigDTO.shift_y);
 
         //making turns
         Turn[] turns = new Turn[gameDTO.turns.Length];

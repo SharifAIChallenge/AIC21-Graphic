@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class SoundManager : MonoBehaviour
 {
-    private bool isMute;
+    [SerializeField]private bool isMute;
     private AudioSource _audioSource;
     [SerializeField] private Image on;
     [SerializeField] private Image off;

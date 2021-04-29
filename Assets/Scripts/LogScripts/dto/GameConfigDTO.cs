@@ -10,4 +10,6 @@ public class GameConfigDTO
     public string team0_name;
     public string team1_name;
     public int winner;
+    public int shift_x;
+    public int shift_y;
 }

@@ -24,6 +24,7 @@ public class CanvasSampleOpenFileText : MonoBehaviour, IPointerDownHandler
 
     // Called from browser
     public void OnFileUpload(string url) {
+        Debug.Log(url);
         StartCoroutine(OutputRoutine(url));
     }
 #else
@@ -34,9 +35,6 @@ public class CanvasSampleOpenFileText : MonoBehaviour, IPointerDownHandler
 
     void Start()
     {
-        float a = Mathf.Ceil(Mathf.Pow(2, 0.5f)) +1;
-        Debug.Log(a);
-        Debug.Log(Mathf.Pow(a,2));
         var button = GetComponent<Button>();
         button.onClick.AddListener(OnClick);
     }
@@ -46,6 +44,7 @@ public class CanvasSampleOpenFileText : MonoBehaviour, IPointerDownHandler
         var paths = StandaloneFileBrowser.OpenFilePanel("Title", "", "json", false);
         if (paths.Length > 0) 
         {
+            Debug.Log(paths[0]);
             StartCoroutine(OutputRoutine(new System.Uri(paths[0]).AbsoluteUri));
         }
     }
@@ -54,6 +53,8 @@ public class CanvasSampleOpenFileText : MonoBehaviour, IPointerDownHandler
     private IEnumerator OutputRoutine(string url) 
     {
         var loader = new WWW(url);
+        Debug.Log(url);
+        Debug.Log(Application.dataPath);
         yield return loader;
         GameLogReader.Instance.MakeLog(loader.text);
     }
